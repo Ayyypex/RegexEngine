@@ -1,3 +1,9 @@
+\\---------------- Commit #9 on 22/8/2022 ------------------------------------------------//
+I didn't look hard enough, the JUnit4 GitHub had a guide for exactly what I wanted. Now,
+a single test is being run with different parameters. This definitiely DRYs my code out.
+
+
+
 \\---------------- Commit #8 on 22/8/2022 ------------------------------------------------//
 Added a bunch more test cases, everything working as expected so far. I tried to write 
 them to test a lot such as every letter, digit, and valid symbol.
