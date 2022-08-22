@@ -1,3 +1,14 @@
+\\---------------- Commit #8 on 22/8/2022 ------------------------------------------------//
+Added a bunch more test cases, everything working as expected so far. I tried to write 
+them to test a lot such as every letter, digit, and valid symbol.
+
+While making the tests, I thought of a case that I was unsure about: a**. What happens
+when you double the | * + symbols? I think it's meaningless and is equivalent to just a 
+single symbol though. Now I'm thinking what to do with an unclosed bracket. That's a 
+problem for future me though.
+
+
+
 \\---------------- Commit #7 on 22/8/2022 ------------------------------------------------//
 It's a good thing I did decide to test my code since I actually forgot to add validation 
 for numbers.
