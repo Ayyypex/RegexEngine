@@ -1,4 +1,12 @@
 \\---------------- Commit #4 on 22/8/2022 ------------------------------------------------//
+It is very easy to read input line by line with Java. It is much nicer than coding in C.
+The only thing I needed to worry about is wrapping the read line in a try and catch. I 
+will need to consider cases of invalid input later on though. For now, I want to 
+prioritise writing working code.
+
+
+
+\\---------------- Commit #4 on 22/8/2022 ------------------------------------------------//
 Started thinking about the structure of my code and the steps it will need to take. After
 getting the regex input, the program should create a corresponding NFA. Then the program
 will take more lines of input and simulate the NFA processing that input, printing true 
