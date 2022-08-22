@@ -1,3 +1,8 @@
+\\---------------- Commit 2 on 22/8/2022 ------------------------------------------------//
+Installed JDK11 and created the RegexEngine source file.
+
+
+
 \\---------------- Commit #1 on 22/8/2022 ------------------------------------------------//
-Just setting up the directory. I've decided to log my progress within this file
-so it's easier to view everything as it will all be in one place.
+Just setting up the directory. I've decided to log my progress within this file so it's 
+easier to view everything as it will all be in one place.
