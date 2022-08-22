@@ -1,4 +1,16 @@
-\\---------------- Commit 2 on 22/8/2022 ------------------------------------------------//
+\\---------------- Commit #3 on 22/8/2022 ------------------------------------------------//
+Installed relevant .jar files needed to run the tests and followed the JUnit4 guide. I
+have some more understanding on how to test my code now. I'll have separate test files 
+for each type of tests as there will be multiple components to this program that should 
+be tested.
+
+A slight concern I have is that the assignment page states that tests will be compiled 
+with 'javac *_Test.java' which does not correspond with the Getting Started guide. I'll 
+investigate this later, for now the tests the works.
+
+
+
+\\---------------- Commit #2 on 22/8/2022 ------------------------------------------------//
 Installed JDK11 and created the RegexEngine source file.
 
 
