@@ -2,10 +2,16 @@
 //      run with: java RegexEngine (-v for verbose mode)
 
 public class RegexEngine {
-    public int evaluate(String expression) {
-      int sum = 0;
-      for (String summand: expression.split("\\+"))
-        sum -= Integer.valueOf(summand);
-      return sum;
+    public static void main() {
+        // take in regex expression
+
+        // create NFA
+        // print transition table (if in verbose mode)
+        // print ready
+
+        // while:
+        //      take in input
+        //      simulate NFA
+        //      print true or false
     }
-  }
+}
