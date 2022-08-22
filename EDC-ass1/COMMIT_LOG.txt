@@ -1,4 +1,13 @@
-\\---------------- Commit #4 on 22/8/2022 ------------------------------------------------//
+\\---------------- Commit #6 on 22/8/2022 ------------------------------------------------//
+I didn't need the try and catch if I throw IOExceptions. I thought I wasn't going to 
+worry about validating the input until later, but the requirements are very straight 
+forward. I'm also procrastinating starting the hard parts of this assignment.
+
+I suppose validRegex() is something I should test, I'll work on that next.
+
+
+
+\\---------------- Commit #5 on 22/8/2022 ------------------------------------------------//
 It is very easy to read input line by line with Java. It is much nicer than coding in C.
 The only thing I needed to worry about is wrapping the read line in a try and catch. I 
 will need to consider cases of invalid input later on though. For now, I want to 
