@@ -36,7 +36,7 @@ public class RegexEngine {
     static boolean validRegex(String regex) {
         for ( int i=0; i < regex.length(); i++ ) {
             char ch = regex.charAt(i);
-            if ( !Character.isAlphabetic(ch) && !validSymbol(ch) ) {
+            if ( !Character.isAlphabetic(ch) && !Character.isDigit(ch) && !validSymbol(ch) ) {
                 return false;
             }
         }

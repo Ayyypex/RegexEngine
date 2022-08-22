@@ -1,3 +1,15 @@
+\\---------------- Commit #7 on 22/8/2022 ------------------------------------------------//
+It's a good thing I did decide to test my code since I actually forgot to add validation 
+for numbers.
+
+I've looked into how to write tests that repeat for different input but I didn't find a
+simple example that worked, so I guess I'll copy the tests and modify its input. I also
+searched for test conventions and I've come to a conclusion that it's ok to not have all
+tests for a class in one file. I'll split the test files up up by function / goal of the
+test. This will also make things more modular and easy for me to work with.
+
+
+
 \\---------------- Commit #6 on 22/8/2022 ------------------------------------------------//
 I didn't need the try and catch if I throw IOExceptions. I thought I wasn't going to 
 worry about validating the input until later, but the requirements are very straight 
