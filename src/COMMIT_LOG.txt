@@ -1,3 +1,14 @@
+\\---------------- Commit #12 on 23/8/2022 ------------------------------------------------//
+The pseudo code made me realized there's probably a function to check for alphanumeric 
+characters, I found isLetterOrDigit(). The assignment spec doesn't make it very clear but
+I am also treating spaces as valid characters. Also, Java's stack implementation has a
+function to check whether it's empty so I don't need to push a special symbol onto the 
+stack first. 
+
+Implementation passes current test, will make some more.
+
+
+
 \\---------------- Commit #11 on 23/8/2022 ------------------------------------------------//
 Wrote the skeleton code for the functions I'll need and prepared a test file to test the
 toPostfix() function. Reviewing the Google Java style guide, I found that there should be

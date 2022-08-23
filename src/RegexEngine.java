@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Stack;
 
 // compiled with: javac RegexEngine.java
 //      run with: java RegexEngine (-v for verbose mode)
@@ -39,7 +40,7 @@ public class RegexEngine {
     static boolean validRegex(String regex) {
         for ( int i=0; i < regex.length(); i++ ) {
             char ch = regex.charAt(i);
-            if ( !Character.isAlphabetic(ch) && !Character.isDigit(ch) && !validSymbol(ch) ) {
+            if ( !Character.isLetterOrDigit(ch) && !validSymbol(ch) ) {
                 return false;
             }
         }
@@ -55,13 +56,56 @@ public class RegexEngine {
     }
 
     // converts infix expression to postfix
-    static String toPostfix(String regex) {
+    static String toPostfix(String infix) {
+        Stack<Character> st = new Stack<>();
         String postfix = "";
+
+        // iterate over every character
+        for ( int i=0; i < infix.length(); i++ ) {
+            char ch = infix.charAt(i);
+
+            // append 
+            if ( Character.isLetterOrDigit(ch) || ch == ' ' ) {
+                postfix += ch;
+            }
+
+            // push onto stack
+            else if ( ch == '(' ) {
+                st.push(ch);
+            }
+
+            // append operators within brackets
+            else if ( ch == ')' ) {
+                while ( !st.empty() && st.peek() != '(' ) {
+                    postfix += st.pop();
+                }
+                // pop ( off
+                st.pop();
+            }
+
+            // push operators: | + *
+            else {
+                // if top stack element precedence is higher than current element, append top
+                while ( !st.empty() && precedenceOf(ch) <= precedenceOf(st.peek()) ) {
+                    postfix += st.pop();
+                }
+                st.push(ch);
+            }
+        }
+
+        // append any remaining operators on stack
+        while ( !st.empty() ) {
+            postfix += st.pop();
+        }
+
         return postfix;
     }
 
     // returns the precedence of a character
     static int precedenceOf(char ch) {
+        if ( ch == '*' || ch == '+' ) {
+            return 1;
+        }
         return 0;
     }
 }
