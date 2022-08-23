@@ -19,7 +19,10 @@ public class RegexEngine {
             System.exit(1);
         }
 
-        // NFA = createNFA(regex);
+        // convert expression to postfix notation
+        String postfix = toPostfix(regex);
+
+        // NFA = createNFA(postfix);
         // if(verbose) System.out.println( getTable(NFA) ); 
         System.out.println("ready");
         
@@ -49,5 +52,16 @@ public class RegexEngine {
             return true;
         }
         return false;
+    }
+
+    // converts infix expression to postfix
+    static String toPostfix(String regex) {
+        String postfix = "";
+        return postfix;
+    }
+
+    // returns the precedence of a character
+    static int precedenceOf(char ch) {
+        return 0;
     }
 }

@@ -2,3 +2,4 @@ src/RegexEngine.class
 src/hamcrest-core-1.3.jar
 src/junit-4.13.2.jar
 src/validRegex_Test.class
+src/toPostfix_Test.class

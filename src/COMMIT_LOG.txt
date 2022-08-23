@@ -1,3 +1,17 @@
+\\---------------- Commit #11 on 23/8/2022 ------------------------------------------------//
+Wrote the skeleton code for the functions I'll need and prepared a test file to test the
+toPostfix() function. Reviewing the Google Java style guide, I found that there should be
+some logical order to contents of the class. As of now, my functions are in order of date
+added which is not logical. I'll order them as I develop more functions as I cannot see 
+an immediate way to order them.
+
+
+
+\\---------------- Commit #10 on 23/8/2022 ------------------------------------------------//
+Updated directory name to src.
+
+
+
 \\---------------- Commit #9 on 22/8/2022 ------------------------------------------------//
 I didn't look hard enough, the JUnit4 GitHub had a guide for exactly what I wanted. Now,
 a single test is being run with different parameters. This definitiely DRYs my code out.
