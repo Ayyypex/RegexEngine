@@ -1,5 +1,12 @@
+\\---------------- Commit #13 on 23/8/2022 ------------------------------------------------//
+The bug was caused because I didn't check whether the top stack element was '(' in the 
+while loop in else. This resulted in the bracket being popped of the stack which caused 
+the st.pop() used to pop '(' off to access an empty stack.
+
+
+
 \\---------------- Commit #12 on 23/8/2022 ------------------------------------------------//
-The pseudo code made me realized there's probably a function to check for alphanumeric 
+The pseudo code made me realize there's probably a function to check for alphanumeric 
 characters, I found isLetterOrDigit(). The assignment spec doesn't make it very clear but
 I am also treating spaces as valid characters. Also, Java's stack implementation has a
 function to check whether it's empty so I don't need to push a special symbol onto the 

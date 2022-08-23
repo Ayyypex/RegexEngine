@@ -86,7 +86,7 @@ public class RegexEngine {
             // push operators: | + *
             else {
                 // if top stack element precedence is higher than current element, append top
-                while ( !st.empty() && precedenceOf(ch) <= precedenceOf(st.peek()) ) {
+                while ( !st.empty() && st.peek() != '(' && precedenceOf(ch) <= precedenceOf(st.peek()) ) {
                     postfix += st.pop();
                 }
                 st.push(ch);

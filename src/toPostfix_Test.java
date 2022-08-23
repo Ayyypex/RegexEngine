@@ -17,6 +17,9 @@ public class toPostfix_Test {
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][] {
               { "a+b", "ab+" },
+              { "b*ab", "b*ab" },   // hmm?
+              { "a|b", "ab|" },
+              { "(a|b)", "ab|" },
     });
   }
 
