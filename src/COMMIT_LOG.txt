@@ -1,3 +1,20 @@
+\\---------------- Commit #14 on 24/8/2022 ------------------------------------------------//
+I added a function to check if a a character is a valid non-symbol char. I included the 
+space character here because it shouldn't be called a symbol when it's treated the same as 
+alphanumeric characters.
+
+The considerations I made for addConcatenations() were mostly correct. However,checking
+whether the next character is not a symbol is not enough. At that stage, a left bracket
+should also result in a concat operator being added. This caused a bit of an issue for me
+but I realized soon enough why the correct output wasn't being produced. I added a test 
+file for this function too.
+
+I also had to update the input for the toPostfix() tests to include the concatenation
+operator as well. I will write more tests cases for both files tomorrow, but it all seems
+to be working as expected now.
+
+
+
 \\---------------- Commit #13 on 23/8/2022 ------------------------------------------------//
 The bug was caused because I didn't check whether the top stack element was '(' in the 
 while loop in else. This resulted in the bracket being popped of the stack which caused 

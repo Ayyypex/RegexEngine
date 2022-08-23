@@ -21,7 +21,8 @@ public class RegexEngine {
         }
 
         // convert expression to postfix notation
-        String postfix = toPostfix(regex);
+        String infix = addConcatenations(regex);
+        String postfix = toPostfix(infix);
 
         // NFA = createNFA(postfix);
         // if(verbose) System.out.println( getTable(NFA) ); 
@@ -40,16 +41,24 @@ public class RegexEngine {
     static boolean validRegex(String regex) {
         for ( int i=0; i < regex.length(); i++ ) {
             char ch = regex.charAt(i);
-            if ( !Character.isLetterOrDigit(ch) && !validSymbol(ch) ) {
+            if ( !validChar(ch) && !validSymbol(ch) ) {
                 return false;
             }
         }
         return true;
     }
 
-    // checks if character is acceptable
+    // checks if character is a valid char
+    static boolean validChar(char ch) {
+        if ( !Character.isLetterOrDigit(ch) && ch != ' ' ) {
+            return false;
+        }
+        return true;
+    }
+
+    // checks if character is a valid symbol
     static boolean validSymbol(char ch) {
-        if ( ch == '|' || ch == '*' || ch == '+' || ch == '(' || ch == ')' || ch == ' ' ) {
+        if ( ch == '|' || ch == '*' || ch == '+' || ch == '(' || ch == ')' ) {
             return true;
         }
         return false;
@@ -65,7 +74,7 @@ public class RegexEngine {
             char ch = infix.charAt(i);
 
             // append 
-            if ( Character.isLetterOrDigit(ch) || ch == ' ' ) {
+            if ( validChar(ch) ) {
                 postfix += ch;
             }
 
@@ -83,7 +92,7 @@ public class RegexEngine {
                 st.pop();
             }
 
-            // push operators: | + *
+            // push operators: | + * _
             else {
                 // if top stack element precedence is higher than current element, append top
                 while ( !st.empty() && st.peek() != '(' && precedenceOf(ch) <= precedenceOf(st.peek()) ) {
@@ -104,8 +113,33 @@ public class RegexEngine {
     // returns the precedence of a character
     static int precedenceOf(char ch) {
         if ( ch == '*' || ch == '+' ) {
+            return 2;
+        }
+        else if ( ch  == '_' ) {
             return 1;
         }
         return 0;
+    }
+
+    // adds concatenation symbols to an infix string
+    static String addConcatenations(String infix) {
+        String output = "";
+
+        // iterate over every character
+        for ( int i=0; i < infix.length(); i++ ) {
+            char ch = infix.charAt(i);
+            output += ch;
+
+            // if character is not ( or |, then investigate the next
+            if ( ch != '(' && ch != '|' && i < infix.length()-1 ) {
+                char next = infix.charAt(i+1);
+                // if next character is not a symbol (except left bracket '(' ) then add concatenation symbol
+                if ( validChar(next) ||  next == '(' ) {       
+                    output += '_';
+                }
+            }
+        }
+
+        return output;
     }
 }
