@@ -20,7 +20,14 @@ public class toPostfix_Test {
               { "b*_a_b", "b*a_b_" },
               { "a|b", "ab|" },
               { "(a|b)", "ab|" },
-              { "a_b_(c|d)*_f", "ab_cd|*_f_" }
+              { "a_b_(c|d)*_f", "ab_cd|*_f_" },
+              
+              // these inputs are the output from addConcatenations() tests
+              { "a_b_c", "ab_c_" },  
+              { "a_b_(c|d)*_f", "ab_cd|*_f_" }, 
+              { "a+_b*_c+", "a+b*_c+_" },   
+              { "a+_(b*_c|d_e)+_f+", "a+b*c_de_|+_f+_" },   
+              { "a_(b|c_d|e*_f|g+_h|i)_(j_k)*", "abcd_|e*f_|g+h_|i|_jk_*_" }
     });
   }
 
@@ -34,6 +41,7 @@ public class toPostfix_Test {
 
   @Test
   public void test() {
+    System.out.println("expected: " + pExpected + "  got: "+ RegexEngine.toPostfix(pInput));
     assertEquals(pExpected, RegexEngine.toPostfix(pInput) );
   }
 }

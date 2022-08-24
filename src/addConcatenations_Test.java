@@ -16,8 +16,11 @@ public class addConcatenations_Test {
   @Parameters
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][] {
-              { "abc", "a_b_c" },
-              { "ab(c|d)*f", "a_b_(c|d)*_f" }, 
+              { "abc", "a_b_c" },                                             // basic sequence test
+              { "ab(c|d)*f", "a_b_(c|d)*_f" },                                // tests how it handles the other symbols
+              { "a+b*c+", "a+_b*_c+" },                                       // tests sequence of alternating char and op 
+              { "a+(b*c|de)+f+", "a+_(b*_c|d_e)+_f+" },                       // tests expression within brackets
+              { "a(b|cd|e*f|g+h|i)(jk)*", "a_(b|c_d|e*_f|g+_h|i)_(j_k)*" }    // tests sequence of brackets (x)(y) 
     });
   }
 

@@ -7,7 +7,6 @@ import java.util.Stack;
 //      run with: java RegexEngine (-v for verbose mode)
 
 public class RegexEngine {
-    // main function
     public static void main(String[] args) 
         throws IOException 
     {
@@ -20,7 +19,7 @@ public class RegexEngine {
             System.exit(1);
         }
 
-        // convert expression to postfix notation
+        // add concatenation symbols and convert expression to postfix notation
         String infix = addConcatenations(regex);
         String postfix = toPostfix(infix);
 
@@ -37,7 +36,7 @@ public class RegexEngine {
         }
     }
 
-    // checks if regex string is acceptable
+    // checks if regex string contains any illegal character
     static boolean validRegex(String regex) {
         for ( int i=0; i < regex.length(); i++ ) {
             char ch = regex.charAt(i);
@@ -48,7 +47,7 @@ public class RegexEngine {
         return true;
     }
 
-    // checks if character is a valid char
+    // checks if character is valid
     static boolean validChar(char ch) {
         if ( !Character.isLetterOrDigit(ch) && ch != ' ' ) {
             return false;

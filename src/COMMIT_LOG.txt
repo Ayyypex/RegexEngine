@@ -1,3 +1,15 @@
+\\---------------- Commit #15 on 24/8/2022 ------------------------------------------------//
+Added more tests for addConcatenations() and toPostfix(). The first function doesn't have
+many edge cases we need to check so there are less tests. 
+
+Writing the expected output for toPostfix() was a bit annoying as I have no resources to 
+check. I had to write them manually, making mistakes for the larger input and then being
+corrected by the function, which is not ideal. I believe it's working as I want it to,
+which should make the creation and linking of the NFAs simpler.
+
+
+
+
 \\---------------- Commit #14 on 24/8/2022 ------------------------------------------------//
 I added a function to check if a a character is a valid non-symbol char. I included the 
 space character here because it shouldn't be called a symbol when it's treated the same as 
