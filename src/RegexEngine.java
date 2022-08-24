@@ -2,6 +2,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
+import java.util.List;
+
+
 
 // compiled with: javac RegexEngine.java
 //      run with: java RegexEngine (-v for verbose mode)
@@ -213,17 +216,17 @@ public class RegexEngine {
     // NFA Class
     static class NFA {
         // instance variables
-        String start = "";
-        String end = "";
-        String states = "";
-        String transitions = "";
+        String start;
+        String end;
+        String states;
+        List<Transition> transitions;
     
         // Constructor
         public NFA(char ch) {
             this.start = "q0";
             this.end = "q1";
             this.states = "q0 q1";
-            this.transitions = "q0,ch,q1";
+            this.transitions.add( new Transition("q0", String.valueOf(ch), "q1") );
         }
     
         // 
@@ -244,6 +247,19 @@ public class RegexEngine {
         // 
         static NFA alternate(NFA nfa1, NFA nfa2) {
             return nfa1;
+        }
+
+        // Transition class to represent a simple triplet
+        static class Transition {
+            public String state;
+            public String input;
+            public String result;
+
+            public Transition(String state, String input, String result) {
+                this.state = state;
+                this.input = input;
+                this.result = result;
+            }
         }
     }
 }

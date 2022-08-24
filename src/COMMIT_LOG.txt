@@ -1,3 +1,14 @@
+\\---------------- Commit #19 on 24/8/2022 ------------------------------------------------//
+Defined a new static Transition class within the NFA class to represent transitions as 
+triplets.
+
+
+
+\\---------------- Commit #18 on 24/8/2022 ------------------------------------------------//
+Defined a new static NFA class and moved all related NFA functions inside of it.
+
+
+
 \\---------------- Commit #17 on 24/8/2022 ------------------------------------------------//
 Moved all tests and relevant files into its own directory to declutter things.
 
