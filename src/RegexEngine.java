@@ -152,7 +152,7 @@ public class RegexEngine {
             char ch = postfix.charAt(i);
 
             if ( validChar(ch) ) {
-                st.push( newNFA(ch) );
+                st.push( new NFA(ch) );
             }
 
             else if ( ch == '*' ) {
@@ -162,7 +162,7 @@ public class RegexEngine {
                     System.exit(1);
                 }
 
-                st.push( kleeneStar( st.pop() ) );
+                st.push( NFA.kleeneStar( st.pop() ) );
             }
 
             else if ( ch == '+' ) {
@@ -172,7 +172,7 @@ public class RegexEngine {
                     System.exit(1);
                 }
 
-                st.push( kleenePlus( st.pop() ) );
+                st.push( NFA.kleenePlus( st.pop() ) );
             }
 
             else if ( ch == '_' ) {
@@ -182,7 +182,7 @@ public class RegexEngine {
                     System.exit(1);
                 }
 
-                st.push( concatenate(st.pop(), st.pop()) );
+                st.push( NFA.concatenate(st.pop(), st.pop()) );
             }
 
             else if ( ch == '|' ) {
@@ -192,7 +192,7 @@ public class RegexEngine {
                     System.exit(1);
                 }
 
-                st.push( alternate(st.pop(), st.pop()) );
+                st.push( NFA.alternate(st.pop(), st.pop()) );
             }
 
             else {
@@ -210,28 +210,41 @@ public class RegexEngine {
         return st.pop();
     }
 
-    // 
-    static NFA newNFA(char ch) {
-        return NFA;
-    }
-
-    // 
-    static NFA kleeneStar(NFA nfa) {
-        return nfa;
-    }
-
-    // 
-    static NFA kleenePlus(NFA nfa) {
-        return nfa;
-    }
-
-    // 
-    static NFA concatenate(NFA nfa1, NFA nfa2) {
-        return nfa1;
-    }
-
-    // 
-    static NFA alternate(NFA nfa1, NFA nfa2) {
-        return nfa1;
+    // NFA Class
+    static class NFA {
+        // instance variables
+        String start = "";
+        String end = "";
+        String states = "";
+        String transitions = "";
+    
+        // Constructor
+        public NFA(char ch) {
+            this.start = "q0";
+            this.end = "q1";
+            this.states = "q0 q1";
+            this.transitions = "q0,ch,q1";
+        }
+    
+        // 
+        static NFA kleeneStar(NFA nfa) {
+            return nfa;
+        }
+    
+        // 
+        static NFA kleenePlus(NFA nfa) {
+            return nfa;
+        }
+    
+        // 
+        static NFA concatenate(NFA nfa1, NFA nfa2) {
+            return nfa1;
+        }
+    
+        // 
+        static NFA alternate(NFA nfa1, NFA nfa2) {
+            return nfa1;
+        }
     }
 }
+
