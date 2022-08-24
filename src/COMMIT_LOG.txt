@@ -1,3 +1,8 @@
+\\---------------- Commit #20 on 24/8/2022 ------------------------------------------------//
+Added newState() function to return a new and unused state name.
+
+
+
 \\---------------- Commit #19 on 24/8/2022 ------------------------------------------------//
 Defined a new static Transition class within the NFA class to represent transitions as 
 triplets.

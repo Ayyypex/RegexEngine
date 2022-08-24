@@ -4,8 +4,6 @@ import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.List;
 
-
-
 // compiled with: javac RegexEngine.java
 //      run with: java RegexEngine (-v for verbose mode)
 
@@ -213,20 +211,35 @@ public class RegexEngine {
         return st.pop();
     }
 
-    // NFA Class
+    // NFA class to represent FSA
     static class NFA {
         // instance variables
         String start;
         String end;
-        String states;
+        List<String> states;
         List<Transition> transitions;
+
+        // static variables
+        static int numberOfStates = 0;
     
-        // Constructor
+        // Constructor - creates base NFA for single character
         public NFA(char ch) {
-            this.start = "q0";
-            this.end = "q1";
-            this.states = "q0 q1";
-            this.transitions.add( new Transition("q0", String.valueOf(ch), "q1") );
+            String state = NFA.newState();
+            String input = String.valueOf(ch);
+            String result = NFA.newState();
+
+            this.start = state;
+            this.end = result;
+            this.states.add(state);
+            this.states.add(result);
+            this.transitions.add( new Transition(state, input, result) );
+        }
+
+        // returns a new unused state name and increments number of states
+        static String newState() {
+            String state = "q" + String.valueOf(NFA.numberOfStates);
+            NFA.numberOfStates++;
+            return state;
         }
     
         // 
@@ -255,6 +268,7 @@ public class RegexEngine {
             public String input;
             public String result;
 
+            // Constructor
             public Transition(String state, String input, String result) {
                 this.state = state;
                 this.input = input;

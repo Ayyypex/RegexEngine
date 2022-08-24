@@ -4,3 +4,5 @@ src/tests/junit-4.13.2.jar
 src/tests/validRegex_Test.class
 src/tests/toPostfix_Test.class
 src/tests/addConcatenations_Test.class
+src/RegexEngine$NFA.class
+src/RegexEngine$NFA$Transition.class
