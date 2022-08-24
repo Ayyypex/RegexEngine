@@ -41,7 +41,6 @@ public class toPostfix_Test {
 
   @Test
   public void test() {
-    System.out.println("expected: " + pExpected + "  got: "+ RegexEngine.toPostfix(pInput));
     assertEquals(pExpected, RegexEngine.toPostfix(pInput) );
   }
 }

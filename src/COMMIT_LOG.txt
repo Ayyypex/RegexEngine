@@ -1,3 +1,9 @@
+\\---------------- Commit #16 on 24/8/2022 ------------------------------------------------//
+Defined skeleton code for relevant functions. Implemented loop structure and added some 
+error checks.
+
+
+
 \\---------------- Commit #15 on 24/8/2022 ------------------------------------------------//
 Added more tests for addConcatenations() and toPostfix(). The first function doesn't have
 many edge cases we need to check so there are less tests. 

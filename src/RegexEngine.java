@@ -23,8 +23,10 @@ public class RegexEngine {
         String infix = addConcatenations(regex);
         String postfix = toPostfix(infix);
 
-        // NFA = createNFA(postfix);
-        // if(verbose) System.out.println( getTable(NFA) ); 
+        // generate NFA structure
+        NFA finalNFA = generateNFA(postfix);
+
+        // if(verbose) printTable(NFA) ; 
         System.out.println("ready");
         
         // read each line until ctrl+c
@@ -140,5 +142,96 @@ public class RegexEngine {
         }
 
         return output;
+    }
+
+    //
+    static NFA generateNFA(String postfix) {
+        Stack<NFA> st = new Stack<>();
+
+        for (int i=0; i < postfix.length(); i++ ) {
+            char ch = postfix.charAt(i);
+
+            if ( validChar(ch) ) {
+                st.push( newNFA(ch) );
+            }
+
+            else if ( ch == '*' ) {
+                // error
+                if ( st.empty() ) {
+                    System.out.println("Error: Kleene Star when stack is empty");
+                    System.exit(1);
+                }
+
+                st.push( kleeneStar( st.pop() ) );
+            }
+
+            else if ( ch == '+' ) {
+                // error
+                if ( st.empty() ) {
+                    System.out.println("Error: Kleene Plus when stack is empty");
+                    System.exit(1);
+                }
+
+                st.push( kleenePlus( st.pop() ) );
+            }
+
+            else if ( ch == '_' ) {
+                // error
+                if ( st.size() < 2 ) {
+                    System.out.println("Error: Concatenation when there are less than two NFAs on stack");
+                    System.exit(1);
+                }
+
+                st.push( concatenate(st.pop(), st.pop()) );
+            }
+
+            else if ( ch == '|' ) {
+                // error
+                if ( st.size() < 2 ) {
+                    System.out.println("Error: Kleene Star when stack is empty");
+                    System.exit(1);
+                }
+
+                st.push( alternate(st.pop(), st.pop()) );
+            }
+
+            else {
+                System.out.println("Error: How'd we get here?");
+                System.exit(1);
+            } 
+        }
+
+        // there should only be 1 NFA on the stack
+        if ( st.size() != 1 ) {
+            System.out.println("Error: There is not just 1 NFA left");
+            System.exit(1);
+        }
+
+        return st.pop();
+    }
+
+    // 
+    static NFA newNFA(char ch) {
+        return NFA;
+    }
+
+    // 
+    static NFA kleeneStar(NFA nfa) {
+        return nfa;
+    }
+
+    // 
+    static NFA kleenePlus(NFA nfa) {
+        return nfa;
+    }
+
+    // 
+    static NFA concatenate(NFA nfa1, NFA nfa2) {
+        return nfa1;
+    }
+
+    // 
+    static NFA alternate(NFA nfa1, NFA nfa2) {
+        return nfa1;
     }
 }
