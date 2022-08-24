@@ -1,3 +1,8 @@
+\\---------------- Commit #17 on 24/8/2022 ------------------------------------------------//
+Moved all tests and relevant files into its own directory to declutter things.
+
+
+
 \\---------------- Commit #16 on 24/8/2022 ------------------------------------------------//
 Defined skeleton code for relevant functions. Implemented loop structure and added some 
 error checks.

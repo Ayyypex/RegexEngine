@@ -188,7 +188,7 @@ public class RegexEngine {
             else if ( ch == '|' ) {
                 // error
                 if ( st.size() < 2 ) {
-                    System.out.println("Error: Kleene Star when stack is empty");
+                    System.out.println("Error: Alternation when there are less than two NFAs on stack");
                     System.exit(1);
                 }
 

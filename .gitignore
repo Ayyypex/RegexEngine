@@ -1,6 +1,6 @@
 src/RegexEngine.class
-src/hamcrest-core-1.3.jar
-src/junit-4.13.2.jar
-src/validRegex_Test.class
-src/toPostfix_Test.class
-src/addConcatenations_Test.class
+src/tests/hamcrest-core-1.3.jar
+src/tests/junit-4.13.2.jar
+src/tests/validRegex_Test.class
+src/tests/toPostfix_Test.class
+src/tests/addConcatenations_Test.class
