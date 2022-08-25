@@ -11,30 +11,35 @@ public class NFA_Test {
 
   @Test
   public void newNFA_test() {
-    RegexEngine.NFA aTest = new RegexEngine.NFA('a');
+    RegexEngine.NFA a = new RegexEngine.NFA('a');
 
-    List<String> statesTest = new ArrayList<String>();
-    statesTest.add("q0");
-    statesTest.add("q1");
+    List<String> states = new ArrayList<String>();
+    states.add("q0");
+    states.add("q1");
 
-    List<RegexEngine.NFA.Transition> transitionsTest = new ArrayList<RegexEngine.NFA.Transition>();
-    transitionsTest.add( new RegexEngine.NFA.Transition("q0", "a", "q1") );
+    List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
+    transitions.add( new RegexEngine.NFA.Transition("q0", "a", "q1") );
 
-    assertEquals( "q0", aTest.start );
-    assertEquals( "q1", aTest.end );
-    assertEquals( true, aTest.states.containsAll(statesTest) );
-    assertEquals( aTest.transitions.size(), transitionsTest.size() );
+    assertEquals( "q0", a.start );
+    assertEquals( "q1", a.end );
+    assertEquals( true, a.states.containsAll(states) );
+    assertEquals( a.transitions.size(), transitions.size() );
 
     // check if each transition is equal
-    if ( aTest.transitions.size() == transitionsTest.size() ) {
-        for ( int i=0; i<aTest.transitions.size(); i++ ) {
-            assertEquals( aTest.transitions.get(i).all, transitionsTest.get(i).all );
+    if ( a.transitions.size() == transitions.size() ) {
+        for ( int i=0; i < a.transitions.size(); i++ ) {
+            assertEquals( a.transitions.get(i).transition, transitions.get(i).transition );
         }
     }
   }
 
+  @Test
   public void newState_test() {
-    assertEquals( true, RegexEngine.validRegex("abcde fghijklmnopqr stuvwxyz") );
+    int number = 3;
+    for ( int i=0; i < number; i++ ) {
+        RegexEngine.NFA.newState();
+    }
+    assertEquals( number+2, RegexEngine.NFA.numberOfStates );   // + 2 from previous test
   }
 
   @Test
@@ -49,7 +54,32 @@ public class NFA_Test {
 
   @Test
   public void concatenate_test() {
-    assertEquals( true, RegexEngine.validRegex("012345 6789") );
+    RegexEngine.NFA d = new RegexEngine.NFA('d');
+    RegexEngine.NFA e = new RegexEngine.NFA('e');
+    RegexEngine.NFA de = RegexEngine.NFA.concatenate(d,e);
+
+    List<String> states = new ArrayList<String>();
+    states.add("q5");
+    states.add("q6");
+    states.add("q7");
+    states.add("q8");
+
+    List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
+    transitions.add( new RegexEngine.NFA.Transition("q5", "d", "q6") );
+    transitions.add( new RegexEngine.NFA.Transition("q7", "e", "q8") );
+    transitions.add( new RegexEngine.NFA.Transition("q6", "eps", "q7") );
+
+    assertEquals( "q5", de.start );
+    assertEquals( "q8", de.end );
+    assertEquals( true, de.states.containsAll(states) );
+    assertEquals( de.transitions.size(), transitions.size() );
+
+    // check if each transition is equal
+    if ( de.transitions.size() == transitions.size() ) {
+        for ( int i=0; i < de.transitions.size(); i++ ) {
+            assertEquals( de.transitions.get(i).transition, transitions.get(i).transition );
+        }
+    }
   }
 
   @Test

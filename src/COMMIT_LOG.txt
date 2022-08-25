@@ -1,3 +1,8 @@
+\\---------------- Commit #22 on 25/8/2022 ------------------------------------------------//
+Wrote concatenate() test.
+
+
+
 \\---------------- Commit #21 on 25/8/2022 ------------------------------------------------//
 I changed where the compiled java goes so I can run tests in the other directory. I will
 change it back for the submission. Created a file to test the NFA functions. I ran into
