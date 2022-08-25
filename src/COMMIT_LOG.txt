@@ -1,3 +1,12 @@
+\\---------------- Commit #23 on 25/8/2022 ------------------------------------------------//
+Wrote remaining NFA tests. It seems the tests aren't run sequentially as the number of NFA
+states was not correct. I'll investigate this later on, but for now it's not important. 
+
+Actually, if they aren't being run sequentially, then the other tests will fail. I will
+investigate this now!
+
+
+
 \\---------------- Commit #22 on 25/8/2022 ------------------------------------------------//
 Wrote concatenate() test.
 
