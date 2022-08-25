@@ -3,15 +3,12 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import org.junit.runner.OrderWith;
-import org.junit.runner.manipulation.Alphanumeric;
 import org.junit.Before;
 
 
 // compile with: javac -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar generateNFA_Test.java
 //     run with: java -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore generateNFA_Test
 
-@OrderWith(Alphanumeric.class)
 public class generateNFA_Test {
  
   @Before
