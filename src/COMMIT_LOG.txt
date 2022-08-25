@@ -1,3 +1,14 @@
+\\---------------- Commit #27 on 25/8/2022 ------------------------------------------------//
+There was a @Before annotation avaiable in JUnit which allows you to run a function before 
+each test. I used this to reset the numberOfStates which means the tests don't have to run
+in order now. I have done the same for the new test file generateNFA_Test.
+
+I have also popped the elements outside of the concatenate() and alternate() function as 
+the order of the pop seemed to change during testing. This way, I can guarantee that the 
+order is preserved.
+
+
+
 \\---------------- Commit #26 on 25/8/2022 ------------------------------------------------//
 Implemented kleeneStar() and kleenePlus(). I had to create copies of the input NFAs for 
 the function to return an updated NFA. Not sure why that is the case, but the tests now 

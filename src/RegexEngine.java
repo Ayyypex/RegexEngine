@@ -184,7 +184,11 @@ public class RegexEngine {
                     System.exit(1);
                 }
 
-                st.push( NFA.concatenate(st.pop(), st.pop()) );
+                NFA B = st.pop();
+                NFA A = st.pop();
+                st.push( NFA.concatenate(A, B) );
+                A = null;
+                B = null;
             }
 
             else if ( ch == '|' ) {
@@ -194,7 +198,11 @@ public class RegexEngine {
                     System.exit(1);
                 }
 
-                st.push( NFA.alternate(st.pop(), st.pop()) );
+                NFA B = st.pop();
+                NFA A = st.pop();
+                st.push( NFA.alternate(A, B) );
+                A = null;
+                B = null;
             }
 
             else {
