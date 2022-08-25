@@ -6,3 +6,7 @@ src/tests/toPostfix_Test.class
 src/tests/addConcatenations_Test.class
 src/RegexEngine$NFA.class
 src/RegexEngine$NFA$Transition.class
+src/tests/RegexEngine.class
+src/tests/RegexEngine$NFA$Transition.class
+src/tests/RegexEngine$NFA.class
+src/tests/NFA_Test.class

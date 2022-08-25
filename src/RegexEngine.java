@@ -3,8 +3,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.List;
+import java.util.ArrayList;
 
-// compiled with: javac RegexEngine.java
+// compiled with: javac RegexEngine.java -d tests
 //      run with: java RegexEngine (-v for verbose mode)
 
 public class RegexEngine {
@@ -214,10 +215,10 @@ public class RegexEngine {
     // NFA class to represent FSA
     static class NFA {
         // instance variables
-        String start;
-        String end;
-        List<String> states;
-        List<Transition> transitions;
+        public String start = "";
+        public String end = "";
+        public List<String> states = new ArrayList<String>();
+        public List<Transition> transitions = new ArrayList<Transition>();
 
         // static variables
         static int numberOfStates = 0;
@@ -264,15 +265,17 @@ public class RegexEngine {
 
         // Transition class to represent a simple triplet
         static class Transition {
-            public String state;
-            public String input;
-            public String result;
+            public String state = "";
+            public String input = "";
+            public String result = "";
+            public String transition = "";
 
             // Constructor
             public Transition(String state, String input, String result) {
                 this.state = state;
                 this.input = input;
                 this.result = result;
+                this.transition = state + " " + input + " " + result;
             }
         }
     }

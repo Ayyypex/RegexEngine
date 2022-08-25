@@ -1,3 +1,15 @@
+\\---------------- Commit #21 on 25/8/2022 ------------------------------------------------//
+I changed where the compiled java goes so I can run tests in the other directory. I will
+change it back for the submission. Created a file to test the NFA functions. I ran into
+problems while writing the first test. A nullPointerException was being caused by me not 
+instantiating the NFA's list properties. I also unfortunately couldn't use containsAll()
+for my custom Transition class. I considered implementing it so it would work but it 
+seemed a bit tedious. 
+
+Instead, I added another property to the Transition class which is just the transition as 
+a single string, and compare that in the test. I will write out the other tests next.
+
+
 \\---------------- Commit #20 on 24/8/2022 ------------------------------------------------//
 Added newState() function to return a new and unused state name.
 
