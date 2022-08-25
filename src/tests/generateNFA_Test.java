@@ -224,9 +224,9 @@ public class generateNFA_Test {
     transitions.add( new RegexEngine.NFA.Transition("q4", "b", "q5") );      // b
     transitions.add( new RegexEngine.NFA.Transition("q3", "eps", "q4") );    // a_ _b
     transitions.add( new RegexEngine.NFA.Transition("q6", " ", "q7") );      // ' ' space character
-    transitions.add( new RegexEngine.NFA.Transition("q8", " ", "q6") );      //  *
-    transitions.add( new RegexEngine.NFA.Transition("q7", " ", "q8") );     
-    transitions.add( new RegexEngine.NFA.Transition("q5", " ", "q8") );      // (a_ _b)_( *)
+    transitions.add( new RegexEngine.NFA.Transition("q8", "eps", "q6") );    //  *
+    transitions.add( new RegexEngine.NFA.Transition("q7", "eps", "q8") );     
+    transitions.add( new RegexEngine.NFA.Transition("q5", "eps", "q8") );      // (a_ _b)_( *)
 
 
     assertEquals( "q0", ab.start );
