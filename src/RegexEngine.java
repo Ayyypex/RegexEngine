@@ -225,9 +225,9 @@ public class RegexEngine {
     
         // Constructor - creates base NFA for single character
         public NFA(char ch) {
-            String state = NFA.newState();
+            String state = newState();
             String input = String.valueOf(ch);
-            String result = NFA.newState();
+            String result = newState();
 
             this.start = state;
             this.end = result;
@@ -244,23 +244,53 @@ public class RegexEngine {
         }
     
         // 
-        static NFA kleeneStar(NFA nfa) {
-            return nfa;
+        static NFA kleeneStar(NFA A) {
+            return A;
         }
     
         // 
-        static NFA kleenePlus(NFA nfa) {
-            return nfa;
+        static NFA kleenePlus(NFA A) {
+            return A;
         }
     
         // 
-        static NFA concatenate(NFA nfa1, NFA nfa2) {
-            return nfa1;
+        static NFA concatenate(NFA A, NFA B) {
+            // add B's states and transitions to A
+            A.states.addAll(B.states);
+            A.transitions.addAll(B.transitions);
+
+            // add epsilon transition from end of A to start of B
+            A.transitions.add( new Transition(A.end, "eps", B.start) );
+
+            // Change A's end to B's end
+            A.end = B.end;
+
+            return A;
         }
     
         // 
-        static NFA alternate(NFA nfa1, NFA nfa2) {
-            return nfa1;
+        static NFA alternate(NFA A, NFA B) {
+            // add B's states and transitions to A
+            A.states.addAll(B.states);
+            A.transitions.addAll(B.transitions);
+
+            // add 2 new states to A
+            String start = newState();
+            String end = newState();
+            A.states.add( start );
+            A.states.add( end );
+
+            // add epsilon transitions
+            A.transitions.add( new Transition(start, "eps", A.start) );
+            A.transitions.add( new Transition(start, "eps", B.start) );
+            A.transitions.add( new Transition(A.end, "eps", end) );
+            A.transitions.add( new Transition(B.end, "eps", end) );
+
+            // Change A's start and end to the new states respectively
+            A.start = start;
+            A.end = end;
+
+            return A;
         }
 
         // Transition class to represent a simple triplet
