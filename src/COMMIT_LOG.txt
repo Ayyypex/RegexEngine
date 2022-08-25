@@ -1,3 +1,9 @@
+\\---------------- Commit #24 on 25/8/2022 ------------------------------------------------//
+I can have the tests run in alphanumeric order, but not in order of appearance, so I have
+adjusted the test names and states accordingly. The first 2 tests now pass as expected.
+
+
+
 \\---------------- Commit #23 on 25/8/2022 ------------------------------------------------//
 Wrote remaining NFA tests. It seems the tests aren't run sequentially as the number of NFA
 states was not correct. I'll investigate this later on, but for now it's not important. 

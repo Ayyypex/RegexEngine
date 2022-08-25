@@ -1,16 +1,20 @@
 import java.util.List;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import org.junit.runner.OrderWith;
+import org.junit.runner.manipulation.Alphanumeric;
+
 
 // compile with: javac -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar *_Test.java
 //     run with: java -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore NFA_Test
 
+@OrderWith(Alphanumeric.class)
 public class NFA_Test {
 
   @Test
-  public void newNFA_test() {
+  public void test1_newNFA() {
     RegexEngine.NFA a = new RegexEngine.NFA('a');
 
     List<String> states = new ArrayList<String>();
@@ -33,35 +37,32 @@ public class NFA_Test {
     }
   }
 
-  // tests aren't being run sequentially it seems, investigate later
-  /* 
   @Test
-  public void newState_test() {
+  public void test2_newState() {
     int number = 3;
     for ( int i=0; i < number; i++ ) {
         RegexEngine.NFA.newState();
     }
     assertEquals( number+2, RegexEngine.NFA.numberOfStates );   // + 2 from previous test
   }
-  */
 
   @Test
-  public void kleeneStar_test() {
+  public void test3_kleeneStar() {
     RegexEngine.NFA b = new RegexEngine.NFA('b');
     RegexEngine.NFA bStar = RegexEngine.NFA.kleeneStar(b);
 
     List<String> states = new ArrayList<String>();
-    states.add("q2");
-    states.add("q3");
-    states.add("q4");
+    states.add("q5");
+    states.add("q6");
+    states.add("q7");
 
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
-    transitions.add( new RegexEngine.NFA.Transition("q2", "b", "q3") );
-    transitions.add( new RegexEngine.NFA.Transition("q4", "eps", "q2") );
-    transitions.add( new RegexEngine.NFA.Transition("q3", "eps", "q4") );
+    transitions.add( new RegexEngine.NFA.Transition("q5", "b", "q6") );
+    transitions.add( new RegexEngine.NFA.Transition("q7", "eps", "q5") );
+    transitions.add( new RegexEngine.NFA.Transition("q6", "eps", "q7") );
 
-    assertEquals( "q4", bStar.start );
-    assertEquals( "q4", bStar.end );
+    assertEquals( "q7", bStar.start );
+    assertEquals( "q7", bStar.end );
     assertEquals( true, bStar.states.containsAll(states) );
     assertEquals( bStar.transitions.size(), transitions.size() );
 
@@ -74,22 +75,22 @@ public class NFA_Test {
   }
 
   @Test
-  public void kleenePlus_test() {
+  public void test4_kleenePlus() {
     RegexEngine.NFA c = new RegexEngine.NFA('c');
     RegexEngine.NFA cPlus = RegexEngine.NFA.kleeneStar(c);
 
     List<String> states = new ArrayList<String>();
-    states.add("q5");
-    states.add("q6");
-    states.add("q7");
+    states.add("q8");
+    states.add("q9");
+    states.add("q10");
 
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
-    transitions.add( new RegexEngine.NFA.Transition("q5", "c", "q6") );
-    transitions.add( new RegexEngine.NFA.Transition("q7", "eps", "q5") );
-    transitions.add( new RegexEngine.NFA.Transition("q6", "eps", "q7") );
+    transitions.add( new RegexEngine.NFA.Transition("q8", "c", "q9") );
+    transitions.add( new RegexEngine.NFA.Transition("q10", "eps", "q8") );
+    transitions.add( new RegexEngine.NFA.Transition("q9", "eps", "q10") );
 
-    assertEquals( "q5", cPlus.start );
-    assertEquals( "q7", cPlus.end );
+    assertEquals( "q8", cPlus.start );
+    assertEquals( "q10", cPlus.end );
     assertEquals( true, cPlus.states.containsAll(states) );
     assertEquals( cPlus.transitions.size(), transitions.size() );
 
@@ -102,24 +103,24 @@ public class NFA_Test {
   }
 
   @Test
-  public void concatenate_test() {
+  public void test5_concatenate() {
     RegexEngine.NFA d = new RegexEngine.NFA('d');
     RegexEngine.NFA e = new RegexEngine.NFA('e');
     RegexEngine.NFA de = RegexEngine.NFA.concatenate(d,e);
 
     List<String> states = new ArrayList<String>();
-    states.add("q5");
-    states.add("q6");
-    states.add("q7");
-    states.add("q8");
+    states.add("q11");
+    states.add("q12");
+    states.add("q13");
+    states.add("q14");
 
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
-    transitions.add( new RegexEngine.NFA.Transition("q5", "d", "q6") );
-    transitions.add( new RegexEngine.NFA.Transition("q7", "e", "q8") );
-    transitions.add( new RegexEngine.NFA.Transition("q6", "eps", "q7") );
+    transitions.add( new RegexEngine.NFA.Transition("q11", "d", "q12") );
+    transitions.add( new RegexEngine.NFA.Transition("q13", "e", "q14") );
+    transitions.add( new RegexEngine.NFA.Transition("q12", "eps", "q13") );
 
-    assertEquals( "q5", de.start );
-    assertEquals( "q8", de.end );
+    assertEquals( "q11", de.start );
+    assertEquals( "q14", de.end );
     assertEquals( true, de.states.containsAll(states) );
     assertEquals( de.transitions.size(), transitions.size() );
 
@@ -132,29 +133,29 @@ public class NFA_Test {
   }
 
   @Test
-  public void alternate_test() {
+  public void test6_alternate() {
     RegexEngine.NFA f = new RegexEngine.NFA('f');
     RegexEngine.NFA g = new RegexEngine.NFA('g');
     RegexEngine.NFA fORg = RegexEngine.NFA.alternate(f,g);
 
     List<String> states = new ArrayList<String>();
-    states.add("q9");
-    states.add("q10");
-    states.add("q11");
-    states.add("q12");
-    states.add("q13");
-    states.add("q14");
+    states.add("q15");
+    states.add("q16");
+    states.add("q17");
+    states.add("q18");
+    states.add("q19");
+    states.add("q20");
 
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
-    transitions.add( new RegexEngine.NFA.Transition("q9", "f", "q10") );
-    transitions.add( new RegexEngine.NFA.Transition("q11", "g", "q12") );
-    transitions.add( new RegexEngine.NFA.Transition("q13", "eps", "q9") );
-    transitions.add( new RegexEngine.NFA.Transition("q13", "eps", "q11") );
-    transitions.add( new RegexEngine.NFA.Transition("q10", "eps", "q14") );
-    transitions.add( new RegexEngine.NFA.Transition("q12", "eps", "q14") );
+    transitions.add( new RegexEngine.NFA.Transition("q15", "f", "q16") );
+    transitions.add( new RegexEngine.NFA.Transition("q17", "g", "q18") );
+    transitions.add( new RegexEngine.NFA.Transition("q19", "eps", "q15") );
+    transitions.add( new RegexEngine.NFA.Transition("q19", "eps", "q17") );
+    transitions.add( new RegexEngine.NFA.Transition("q16", "eps", "q20") );
+    transitions.add( new RegexEngine.NFA.Transition("q18", "eps", "q20") );
 
-    assertEquals( "q13", fORg.start );
-    assertEquals( "q14", fORg.end );
+    assertEquals( "q19", fORg.start );
+    assertEquals( "q20", fORg.end );
     assertEquals( true, fORg.states.containsAll(states) );
     assertEquals( fORg.transitions.size(), transitions.size() );
 
