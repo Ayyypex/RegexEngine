@@ -1,4 +1,10 @@
 \\---------------- Commit #27 on 25/8/2022 ------------------------------------------------//
+I have added more tests for generateNFA(). I also added another case in the other tests 
+to account for the space character. Everything works as intended. 
+
+
+
+\\---------------- Commit #27 on 25/8/2022 ------------------------------------------------//
 There was a @Before annotation avaiable in JUnit which allows you to run a function before 
 each test. I used this to reset the numberOfStates which means the tests don't have to run
 in order now. I have done the same for the new test file generateNFA_Test.

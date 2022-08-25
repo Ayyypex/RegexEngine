@@ -26,7 +26,8 @@ public class toPostfix_Test {
               { "a_b_(c|d)*_f", "ab_cd|*_f_" }, 
               { "a+_b*_c+", "a+b*_c+_" },   
               { "a+_(b*_c|d_e)+_f+", "a+b*c_de_|+_f+_" },   
-              { "a_(b|c_d|e*_f|g+_h|i)_(j_k)*", "abcd_|e*f_|g+h_|i|_jk_*_" }
+              { "a_(b|c_d|e*_f|g+_h|i)_(j_k)*", "abcd_|e*f_|g+h_|i|_jk_*_" },
+              { "(a_ _b)_( *)", "a _b_ *_" }
     });
   }
 

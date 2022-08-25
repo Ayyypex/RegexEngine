@@ -21,13 +21,16 @@ public class NFA_Test {
   public void newNFA_Test() {
     RegexEngine.NFA a = new RegexEngine.NFA('a');
 
+    // States should be added in this order
     List<String> states = new ArrayList<String>();
     states.add("q0");
     states.add("q1");
 
+    // Transitions should be added in this order
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
     transitions.add( new RegexEngine.NFA.Transition("q0", "a", "q1") );
 
+    // check start and end states, all states, and number of transitions
     assertEquals( "q0", a.start );
     assertEquals( "q1", a.end );
     assertEquals( true, a.states.containsAll(states) );
@@ -70,7 +73,6 @@ public class NFA_Test {
     assertEquals( true, bStar.states.containsAll(states) );
     assertEquals( bStar.transitions.size(), transitions.size() );
 
-    // check if each transition is equal
     if ( bStar.transitions.size() == transitions.size() ) {
         for ( int i=0; i < bStar.transitions.size(); i++ ) {
             assertEquals( bStar.transitions.get(i).transition, transitions.get(i).transition );
@@ -98,7 +100,6 @@ public class NFA_Test {
     assertEquals( true, cPlus.states.containsAll(states) );
     assertEquals( cPlus.transitions.size(), transitions.size() );
 
-    // check if each transition is equal
     if ( cPlus.transitions.size() == transitions.size() ) {
         for ( int i=0; i < cPlus.transitions.size(); i++ ) {
             assertEquals( cPlus.transitions.get(i).transition, transitions.get(i).transition );
@@ -128,7 +129,6 @@ public class NFA_Test {
     assertEquals( true, de.states.containsAll(states) );
     assertEquals( de.transitions.size(), transitions.size() );
 
-    // check if each transition is equal
     if ( de.transitions.size() == transitions.size() ) {
         for ( int i=0; i < de.transitions.size(); i++ ) {
             assertEquals( de.transitions.get(i).transition, transitions.get(i).transition );
@@ -163,7 +163,6 @@ public class NFA_Test {
     assertEquals( true, fORg.states.containsAll(states) );
     assertEquals( fORg.transitions.size(), transitions.size() );
 
-    // check if each transition is equal
     if ( fORg.transitions.size() == transitions.size() ) {
         for ( int i=0; i < fORg.transitions.size(); i++ ) {
             assertEquals( fORg.transitions.get(i).transition, transitions.get(i).transition );
