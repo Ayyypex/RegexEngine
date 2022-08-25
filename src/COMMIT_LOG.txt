@@ -1,3 +1,15 @@
+\\---------------- Commit #26 on 25/8/2022 ------------------------------------------------//
+Implemented kleeneStar() and kleenePlus(). I had to create copies of the input NFAs for 
+the function to return an updated NFA. Not sure why that is the case, but the tests now 
+all pass.
+
+
+
+\\---------------- Commit #25 on 25/8/2022 ------------------------------------------------//
+Implemented concatenate() and alternate().
+
+
+
 \\---------------- Commit #24 on 25/8/2022 ------------------------------------------------//
 I can have the tests run in alphanumeric order, but not in order of appearance, so I have
 adjusted the test names and states accordingly. The first 2 tests now pass as expected.

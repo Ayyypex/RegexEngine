@@ -77,7 +77,7 @@ public class NFA_Test {
   @Test
   public void test4_kleenePlus() {
     RegexEngine.NFA c = new RegexEngine.NFA('c');
-    RegexEngine.NFA cPlus = RegexEngine.NFA.kleeneStar(c);
+    RegexEngine.NFA cPlus = RegexEngine.NFA.kleenePlus(c);
 
     List<String> states = new ArrayList<String>();
     states.add("q8");

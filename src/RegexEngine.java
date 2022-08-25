@@ -244,17 +244,47 @@ public class RegexEngine {
         }
     
         // 
-        static NFA kleeneStar(NFA A) {
+        static NFA kleeneStar(NFA nfa) {
+            NFA A = nfa;
+
+            // add a new state to A
+            String startEnd = newState();
+            A.states.add( startEnd );
+
+            // add epsilon transitions from new state to start of A and from end of A to new state
+            A.transitions.add( new Transition(startEnd, "eps", A.start) );
+            A.transitions.add( new Transition(A.end, "eps", startEnd) );
+
+            // Change A's start and end to new state
+            A.start = startEnd;
+            A.end = startEnd;
+
             return A;
         }
     
         // 
-        static NFA kleenePlus(NFA A) {
+        static NFA kleenePlus(NFA nfa) {
+            NFA A = nfa;
+
+            // add a new state to A
+            String end = newState();
+            A.states.add( end );
+
+            // add epsilon transitions from new state to start of A and from end of A to new state
+            A.transitions.add( new Transition(end, "eps", A.start) );
+            A.transitions.add( new Transition(A.end, "eps", end) );
+
+            // Change A's end to new state
+            A.end = end;
+
             return A;
         }
     
         // 
-        static NFA concatenate(NFA A, NFA B) {
+        static NFA concatenate(NFA nfa1, NFA nfa2) {
+            NFA A = nfa1;
+            NFA B = nfa2;
+
             // add B's states and transitions to A
             A.states.addAll(B.states);
             A.transitions.addAll(B.transitions);
@@ -269,7 +299,10 @@ public class RegexEngine {
         }
     
         // 
-        static NFA alternate(NFA A, NFA B) {
+        static NFA alternate(NFA nfa1, NFA nfa2) {
+            NFA A = nfa1;
+            NFA B = nfa2;
+
             // add B's states and transitions to A
             A.states.addAll(B.states);
             A.transitions.addAll(B.transitions);
