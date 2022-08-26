@@ -228,30 +228,36 @@ public class RegexEngine {
         return st.pop();
     }
 
-    // simulates the NFA's processing of the input, returns true if NFA accepts inpt
+    // simulates the NFA's processing of the input, returns true if NFA accepts input
     static boolean simulateNFA( NFA nfa, String input ) {
         // set up state sets
         Set<String> currentStates = new HashSet<String>();
         currentStates.add(nfa.start);
+        //Set<String> visted = new HashSet<String>();
+        //visted.add(nfa.start);
         Set<String> nextStates = new HashSet<String>();
 
         // iterate over each character
         for ( int i=0; i < input.length(); i++ ) {
             String ch = String.valueOf( input.charAt(i) );
+            System.out.println("ch: " + ch);
+            System.out.println("nfaStart: " + nfa.start);
+            System.out.println("nfaEnd: " + nfa.end);
 
-            // perform any epsilon transitions once, add resulting states to currentStates
+            // perform any epsilon transitions once, add resulting states to currentStates and nextStates
             for ( int j=0; j < nfa.transitions.size(); j++ ) {
                 NFA.Transition trans = nfa.transitions.get(j);
-                if ( currentStates.contains(trans.state) && trans.input == "eps" ) {
+                if ( currentStates.contains(trans.state) && trans.input.equals("eps") ) {
+                    System.out.println("eps trans: " + trans.transition);
                     currentStates.add(trans.result);
                 }
             }
 
-            
             // find and take all possible transitions, add resulting state in nextStates
             for ( int j=0; j < nfa.transitions.size(); j++ ) {
                 NFA.Transition trans = nfa.transitions.get(j);
                 if ( currentStates.contains(trans.state) && trans.input.equals(ch) ) {
+                    System.out.println("normal trans: " + trans.transition);
                     nextStates.add(trans.result);
                 }
             }
@@ -262,11 +268,27 @@ public class RegexEngine {
             }
 
             // set currentStates to nextStates and clear out nextStates
-            System.out.println( String.valueOf(currentStates.contains(nfa.end)) );
             currentStates.clear();
             currentStates.addAll(nextStates);
             nextStates.clear();
-            System.out.println( String.valueOf(currentStates.contains(nfa.end)) );
+
+            // perform any epsilon transitions once, add resulting states to currentStates and nextStates
+            for ( int j=0; j < nfa.transitions.size(); j++ ) {
+                NFA.Transition trans = nfa.transitions.get(j);
+                if ( currentStates.contains(trans.state) && trans.input.equals("eps") ) {
+                    System.out.println("eps trans: " + trans.transition);
+                    currentStates.add(trans.result);
+                }
+            }
+        }
+
+        // perform any epsilon transitions once, add resulting states to currentStates and nextStates
+        for ( int j=0; j < nfa.transitions.size(); j++ ) {
+            NFA.Transition trans = nfa.transitions.get(j);
+            if ( currentStates.contains(trans.state) && trans.input.equals("eps") ) {
+                System.out.println(trans.transition);
+                currentStates.add(trans.result);
+            }
         }
 
         // check if NFA is in an accepting state

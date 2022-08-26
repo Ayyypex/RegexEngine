@@ -1,3 +1,9 @@
+\\---------------- Commit #37 on 26/8/2022 ------------------------------------------------//
+KleeneStar test passes but I now have 3 instances of duplicate code that I will try to 
+place into its own function.
+
+
+
 \\---------------- Commit #36 on 26/8/2022 ------------------------------------------------//
 Implemented simulateNFA(). First test now passes. Ran into issues due to me comparing
 strings incorrectly. I have since learned that "==" tests for reference equality (whether
