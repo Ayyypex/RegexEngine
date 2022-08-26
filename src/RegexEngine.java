@@ -3,7 +3,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.List;
-import java.util.ArrayList;
+//import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 // compiled with: javac RegexEngine.java -d tests
 //      run with: java RegexEngine (-v for verbose mode)
@@ -228,7 +230,38 @@ public class RegexEngine {
 
     // simulates the NFA's processing of the input, returns true if NFA accepts inpt
     static boolean simulateNFA( NFA nfa, String input ) {
-        return true;
+        // set up state sets
+        Set<String> currentStates = new HashSet<String>();
+        currentStates.add(nfa.start);
+        Set<String> nextStates = new HashSet<String>();
+
+        // iterate over each character
+        for ( int i=0; i < input.length(); i++ ) {
+            char ch = input.charAt(i);
+
+            // iterate over every transition
+            for ( int j=0; j < nfa.transitions.size(); j++ ) {
+                //a
+            }
+
+
+
+            // if nextStates is empty, then NFA has 'died'
+            if ( nextStates.isEmpty() ) {
+                return false;
+            }
+
+            // set currentStates to nextStates and clear out nextStates
+            currentStates = nextStates;
+            nextStates.clear();
+        }
+
+        // check if NFA is in an accepting state
+        if ( currentStates.contains(nfa.end) ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // NFA class to represent FSA
@@ -236,8 +269,8 @@ public class RegexEngine {
         // instance variables
         public String start = "";
         public String end = "";
-        public List<String> states = new ArrayList<String>();
-        public List<Transition> transitions = new ArrayList<Transition>();
+        public Set<String> states = new HashSet<String>();
+        public Set<Transition> transitions = new HashSet<Transition>();
 
         // static variables
         static int numberOfStates = 0;

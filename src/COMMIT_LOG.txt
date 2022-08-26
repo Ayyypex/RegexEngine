@@ -1,3 +1,8 @@
+\\---------------- Commit #34 on 26/8/2022 ------------------------------------------------//
+Refactored array lists to be sets and some implementation of simulateNFA().
+
+
+
 \\---------------- Commit #33 on 26/8/2022 ------------------------------------------------//
 Created simulateNFA() test file.
 
