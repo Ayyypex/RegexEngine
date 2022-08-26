@@ -228,15 +228,39 @@ public class RegexEngine {
         return st.pop();
     }
 
+    // returns set of states reachable from current state set by taking only epsilon transitions
+    static Set<String> epsClosure(NFA nfa, Set<String> states)  {
+        // 
+        Set<String> eClose = new HashSet<String>();
+        eClose.addAll(states);
+
+        // loop until 
+        boolean newStateAdded = true;
+        while ( newStateAdded ) { 
+            newStateAdded = false;
+
+            for ( int j=0; j < nfa.transitions.size(); j++ ) {
+                NFA.Transition trans = nfa.transitions.get(j);
+
+                // if new state is 
+                if ( eClose.contains(trans.state) && trans.input.equals("eps") && !eClose.contains(trans.result) ) {
+                    System.out.println("eps trans: " + trans.transition);
+                    eClose.add(trans.result);
+                    newStateAdded = true;
+                }
+            }
+        }
+
+        return eClose;
+    }
+
     // simulates the NFA's processing of the input, returns true if NFA accepts input
     static boolean simulateNFA( NFA nfa, String input ) {
         // set up state sets
         Set<String> currentStates = new HashSet<String>();
-        currentStates.add(nfa.start);
-        //Set<String> visted = new HashSet<String>();
-        //visted.add(nfa.start);
         Set<String> nextStates = new HashSet<String>();
-
+        currentStates.add(nfa.start);
+        
         // iterate over each character
         for ( int i=0; i < input.length(); i++ ) {
             String ch = String.valueOf( input.charAt(i) );
@@ -244,16 +268,10 @@ public class RegexEngine {
             System.out.println("nfaStart: " + nfa.start);
             System.out.println("nfaEnd: " + nfa.end);
 
-            // perform any epsilon transitions once, add resulting states to currentStates and nextStates
-            for ( int j=0; j < nfa.transitions.size(); j++ ) {
-                NFA.Transition trans = nfa.transitions.get(j);
-                if ( currentStates.contains(trans.state) && trans.input.equals("eps") ) {
-                    System.out.println("eps trans: " + trans.transition);
-                    currentStates.add(trans.result);
-                }
-            }
+            // compute epsilon closure
+            currentStates = epsClosure(nfa, currentStates);
 
-            // find and take all possible transitions, add resulting state in nextStates
+            // find and take all possible transitions, add resulting states to nextStates
             for ( int j=0; j < nfa.transitions.size(); j++ ) {
                 NFA.Transition trans = nfa.transitions.get(j);
                 if ( currentStates.contains(trans.state) && trans.input.equals(ch) ) {
@@ -271,26 +289,11 @@ public class RegexEngine {
             currentStates.clear();
             currentStates.addAll(nextStates);
             nextStates.clear();
-
-            // perform any epsilon transitions once, add resulting states to currentStates and nextStates
-            for ( int j=0; j < nfa.transitions.size(); j++ ) {
-                NFA.Transition trans = nfa.transitions.get(j);
-                if ( currentStates.contains(trans.state) && trans.input.equals("eps") ) {
-                    System.out.println("eps trans: " + trans.transition);
-                    currentStates.add(trans.result);
-                }
-            }
         }
 
-        // perform any epsilon transitions once, add resulting states to currentStates and nextStates
-        for ( int j=0; j < nfa.transitions.size(); j++ ) {
-            NFA.Transition trans = nfa.transitions.get(j);
-            if ( currentStates.contains(trans.state) && trans.input.equals("eps") ) {
-                System.out.println(trans.transition);
-                currentStates.add(trans.result);
-            }
-        }
-
+        // compute epsilon closure
+        currentStates = epsClosure(nfa, currentStates);
+        
         // check if NFA is in an accepting state
         if ( currentStates.contains(nfa.end) ) {
             return true;

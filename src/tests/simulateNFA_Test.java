@@ -15,7 +15,7 @@ public class simulateNFA_Test {
     RegexEngine.NFA.numberOfStates = 0;
   }
  
-  
+  /* 
   @Test
   public void test1() {
     // create NFA to test
@@ -104,7 +104,7 @@ public class simulateNFA_Test {
         assertEquals( input[i][1], RegexEngine.simulateNFA( nfa, String.valueOf(input[i][0]) ) );
     }
   }
-  
+  */
   @Test
   public void test5() {
     String regex = "a*";

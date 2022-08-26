@@ -1,3 +1,9 @@
+\\---------------- Commit #38 on 26/8/2022 ------------------------------------------------//
+I have implemented epsClosure(). It feels a little iffy to be using it like I have so I 
+might try to find a different way to handle epsilon transitions.
+
+
+
 \\---------------- Commit #37 on 26/8/2022 ------------------------------------------------//
 KleeneStar test passes but I now have 3 instances of duplicate code that I will try to 
 place into its own function.
