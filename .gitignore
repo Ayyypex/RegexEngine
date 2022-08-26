@@ -13,3 +13,4 @@ src/tests/NFA_Test.class
 src/tests/generateNFA_Test.class
 src/tests/simulateNFA_Test.class
 commands.txt
+src/tests/epsClosure_Test.class

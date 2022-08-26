@@ -228,32 +228,6 @@ public class RegexEngine {
         return st.pop();
     }
 
-    // returns set of states reachable from current state set by taking only epsilon transitions
-    static Set<String> epsClosure(NFA nfa, Set<String> states)  {
-        // 
-        Set<String> eClose = new HashSet<String>();
-        eClose.addAll(states);
-
-        // loop until 
-        boolean newStateAdded = true;
-        while ( newStateAdded ) { 
-            newStateAdded = false;
-
-            for ( int j=0; j < nfa.transitions.size(); j++ ) {
-                NFA.Transition trans = nfa.transitions.get(j);
-
-                // if new state is 
-                if ( eClose.contains(trans.state) && trans.input.equals("eps") && !eClose.contains(trans.result) ) {
-                    System.out.println("eps trans: " + trans.transition);
-                    eClose.add(trans.result);
-                    newStateAdded = true;
-                }
-            }
-        }
-
-        return eClose;
-    }
-
     // simulates the NFA's processing of the input, returns true if NFA accepts input
     static boolean simulateNFA( NFA nfa, String input ) {
         // set up state sets
@@ -269,7 +243,7 @@ public class RegexEngine {
             System.out.println("nfaEnd: " + nfa.end);
 
             // compute epsilon closure
-            currentStates = epsClosure(nfa, currentStates);
+            currentStates = NFA.epsClosure(nfa, currentStates);
 
             // find and take all possible transitions, add resulting states to nextStates
             for ( int j=0; j < nfa.transitions.size(); j++ ) {
@@ -292,7 +266,7 @@ public class RegexEngine {
         }
 
         // compute epsilon closure
-        currentStates = epsClosure(nfa, currentStates);
+        currentStates = NFA.epsClosure(nfa, currentStates);
         
         // check if NFA is in an accepting state
         if ( currentStates.contains(nfa.end) ) {
@@ -331,6 +305,32 @@ public class RegexEngine {
             String state = "q" + String.valueOf(NFA.numberOfStates);
             NFA.numberOfStates++;
             return state;
+        }
+
+        // returns set of states reachable from current state set by taking only epsilon transitions
+        static Set<String> epsClosure(NFA nfa, Set<String> states)  {
+            // 
+            Set<String> eClose = new HashSet<String>();
+            eClose.addAll(states);
+
+            // loop until 
+            boolean newStateAdded = true;
+            while ( newStateAdded ) { 
+                newStateAdded = false;
+
+                for ( int j=0; j < nfa.transitions.size(); j++ ) {
+                    NFA.Transition trans = nfa.transitions.get(j);
+
+                    // if new state is 
+                    if ( eClose.contains(trans.state) && trans.input.equals("eps") && !eClose.contains(trans.result) ) {
+                        System.out.println("eps trans: " + trans.transition);
+                        eClose.add(trans.result);
+                        newStateAdded = true;
+                    }
+                }
+            }
+
+            return eClose;
         }
     
         // perform kleeneStar operation
