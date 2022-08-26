@@ -237,16 +237,24 @@ public class RegexEngine {
 
         // iterate over each character
         for ( int i=0; i < input.length(); i++ ) {
-            char ch = input.charAt(i);
+            String ch = String.valueOf( input.charAt(i) );
 
-            // perform any epsilon transitions
-
-            // find and take all possible transitions
+            // perform any epsilon transitions once, add resulting states to currentStates
             for ( int j=0; j < nfa.transitions.size(); j++ ) {
-                //a
+                NFA.Transition trans = nfa.transitions.get(j);
+                if ( currentStates.contains(trans.state) && trans.input == "eps" ) {
+                    currentStates.add(trans.result);
+                }
             }
 
-
+            
+            // find and take all possible transitions, add resulting state in nextStates
+            for ( int j=0; j < nfa.transitions.size(); j++ ) {
+                NFA.Transition trans = nfa.transitions.get(j);
+                if ( currentStates.contains(trans.state) && trans.input.equals(ch) ) {
+                    nextStates.add(trans.result);
+                }
+            }
 
             // if nextStates is empty, then NFA has 'died'
             if ( nextStates.isEmpty() ) {
@@ -254,8 +262,11 @@ public class RegexEngine {
             }
 
             // set currentStates to nextStates and clear out nextStates
-            currentStates = nextStates;
+            System.out.println( String.valueOf(currentStates.contains(nfa.end)) );
+            currentStates.clear();
+            currentStates.addAll(nextStates);
             nextStates.clear();
+            System.out.println( String.valueOf(currentStates.contains(nfa.end)) );
         }
 
         // check if NFA is in an accepting state
