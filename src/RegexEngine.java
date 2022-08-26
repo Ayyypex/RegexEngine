@@ -34,9 +34,15 @@ public class RegexEngine {
         // read each line until ctrl+c
         while (true) {
             String line = reader.readLine();
+            // do some input validation for line
 
-            // if ( simulateNFA(NFA, line) ) System.out.println("true");
-            // else System.out.println("false");
+            // print true or false depending on if the NFA accepts the input
+            if ( simulateNFA(finalNFA, line) ) {
+                System.out.println("true");
+            }
+            else { 
+                System.out.println("false");
+            }
         }
     }
 
@@ -213,11 +219,16 @@ public class RegexEngine {
 
         // there should only be 1 NFA on the stack
         if ( st.size() != 1 ) {
-            System.out.println("Error: There is not just 1 NFA left");
+            System.out.println("Error: There is a non-1 number of NFAs left on the stack");
             System.exit(1);
         }
 
         return st.pop();
+    }
+
+    // simulates the NFA's processing of the input, returns true if NFA accepts inpt
+    static boolean simulateNFA( NFA nfa, String input ) {
+        return true;
     }
 
     // NFA class to represent FSA

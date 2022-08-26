@@ -11,3 +11,4 @@ src/tests/RegexEngine$NFA$Transition.class
 src/tests/RegexEngine$NFA.class
 src/tests/NFA_Test.class
 src/tests/generateNFA_Test.class
+src/tests/simulateNFA_Test.class
