@@ -1,3 +1,11 @@
+\\---------------- Commit #35 on 26/8/2022 ------------------------------------------------//
+Made changes accross source file and test files to accurately reflect new representation 
+of the KleeneStar operation.
+
+Changed the NFA's Sets back to Lists due to Set not having a correspnding get() function.
+
+
+
 \\---------------- Commit #34 on 26/8/2022 ------------------------------------------------//
 Refactored array lists to be sets and some implementation of simulateNFA().
 

@@ -68,8 +68,9 @@ public class generateNFA_Test {
     states.add("q8");   // |
     states.add("q9");
     states.add("q10");  // *
-    states.add("q11");  // f
-    states.add("q12");
+    states.add("q11");
+    states.add("q12");  // f
+    states.add("q13");
 
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
     transitions.add( new RegexEngine.NFA.Transition("q0", "a", "q1") );       // a
@@ -83,12 +84,13 @@ public class generateNFA_Test {
     transitions.add( new RegexEngine.NFA.Transition("q7", "eps", "q9") );
     transitions.add( new RegexEngine.NFA.Transition("q10", "eps", "q8") );    // (c|d)*
     transitions.add( new RegexEngine.NFA.Transition("q9", "eps", "q10") );
+    transitions.add( new RegexEngine.NFA.Transition("q10", "eps", "q11") );
     transitions.add( new RegexEngine.NFA.Transition("q3", "eps", "q10") );    // a_b_(c|d)*
-    transitions.add( new RegexEngine.NFA.Transition("q11", "f", "q12") );     // f
-    transitions.add( new RegexEngine.NFA.Transition("q10", "eps", "q11") );   // a_b_(c|d)*_f
+    transitions.add( new RegexEngine.NFA.Transition("q12", "f", "q13") );     // f
+    transitions.add( new RegexEngine.NFA.Transition("q11", "eps", "q12") );   // a_b_(c|d)*_f
 
     assertEquals( "q0", abcdf.start );
-    assertEquals( "q12", abcdf.end );
+    assertEquals( "q13", abcdf.end );
     assertEquals( true, abcdf.states.containsAll(states) );
     assertEquals( abcdf.transitions.size(), transitions.size() );
 
@@ -110,9 +112,10 @@ public class generateNFA_Test {
     states.add("q3");   // b
     states.add("q4");  
     states.add("q5");   // *
-    states.add("q6");   // c
-    states.add("q7");    
-    states.add("q8");   // +
+    states.add("q6");
+    states.add("q7");   // c
+    states.add("q8");    
+    states.add("q9");   // +
 
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
     transitions.add( new RegexEngine.NFA.Transition("q0", "a", "q1") );      // a
@@ -121,14 +124,15 @@ public class generateNFA_Test {
     transitions.add( new RegexEngine.NFA.Transition("q3", "b", "q4") );      // b
     transitions.add( new RegexEngine.NFA.Transition("q5", "eps", "q3") );    // b*
     transitions.add( new RegexEngine.NFA.Transition("q4", "eps", "q5") );
+    transitions.add( new RegexEngine.NFA.Transition("q5", "eps", "q6") );    
     transitions.add( new RegexEngine.NFA.Transition("q2", "eps", "q5") );    // a+_b*
-    transitions.add( new RegexEngine.NFA.Transition("q6", "c", "q7") );      // c
-    transitions.add( new RegexEngine.NFA.Transition("q8", "eps", "q6") );    // c+
-    transitions.add( new RegexEngine.NFA.Transition("q7", "eps", "q8") );
-    transitions.add( new RegexEngine.NFA.Transition("q5", "eps", "q6") );    // a+_b*_c+
+    transitions.add( new RegexEngine.NFA.Transition("q7", "c", "q8") );      // c
+    transitions.add( new RegexEngine.NFA.Transition("q9", "eps", "q7") );    // c+
+    transitions.add( new RegexEngine.NFA.Transition("q8", "eps", "q9") );
+    transitions.add( new RegexEngine.NFA.Transition("q6", "eps", "q7") );    // a+_b*_c+
 
     assertEquals( "q0", abc.start );
-    assertEquals( "q8", abc.end );
+    assertEquals( "q9", abc.end );
     assertEquals( true, abc.states.containsAll(states) );
     assertEquals( abc.transitions.size(), transitions.size() );
 
@@ -150,18 +154,19 @@ public class generateNFA_Test {
     states.add("q3");   // b
     states.add("q4");  
     states.add("q5");   // *
-    states.add("q6");   // c
-    states.add("q7");    
-    states.add("q8");   // d
-    states.add("q9");  
-    states.add("q10");  // e
-    states.add("q11");  
-    states.add("q12");  // |
-    states.add("q13"); 
-    states.add("q14");  // +
-    states.add("q15");  // f
-    states.add("q16");  
-    states.add("q17");  // +
+    states.add("q6");   
+    states.add("q7");   // c
+    states.add("q8");    
+    states.add("q9");   // d
+    states.add("q10");  
+    states.add("q11");  // e
+    states.add("q12");  
+    states.add("q13");  // |
+    states.add("q14"); 
+    states.add("q15");  // +
+    states.add("q16");  // f
+    states.add("q17");  
+    states.add("q18");  // +
 
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
     transitions.add( new RegexEngine.NFA.Transition("q0", "a", "q1") );      // a
@@ -170,25 +175,26 @@ public class generateNFA_Test {
     transitions.add( new RegexEngine.NFA.Transition("q3", "b", "q4") );      // b
     transitions.add( new RegexEngine.NFA.Transition("q5", "eps", "q3") );    // b*
     transitions.add( new RegexEngine.NFA.Transition("q4", "eps", "q5") );
-    transitions.add( new RegexEngine.NFA.Transition("q6", "c", "q7") );      // c
-    transitions.add( new RegexEngine.NFA.Transition("q5", "eps", "q6") );    // b*_c
-    transitions.add( new RegexEngine.NFA.Transition("q8", "d", "q9") );      // d
-    transitions.add( new RegexEngine.NFA.Transition("q10", "e", "q11") );    // e
-    transitions.add( new RegexEngine.NFA.Transition("q9", "eps", "q10") );   // d_e
-    transitions.add( new RegexEngine.NFA.Transition("q12", "eps", "q5") );   // b*_c|d_e
-    transitions.add( new RegexEngine.NFA.Transition("q12", "eps", "q8") );
-    transitions.add( new RegexEngine.NFA.Transition("q7", "eps", "q13") );
-    transitions.add( new RegexEngine.NFA.Transition("q11", "eps", "q13") );
-    transitions.add( new RegexEngine.NFA.Transition("q14", "eps", "q12") );  // (b*_c|d_e)+
-    transitions.add( new RegexEngine.NFA.Transition("q13", "eps", "q14") );
-    transitions.add( new RegexEngine.NFA.Transition("q2", "eps", "q12") );   // a+_(b*_c|d_e)+
-    transitions.add( new RegexEngine.NFA.Transition("q15", "f", "q16") );    // f
-    transitions.add( new RegexEngine.NFA.Transition("q17", "eps", "q15") );  // f+
-    transitions.add( new RegexEngine.NFA.Transition("q16", "eps", "q17") );
-    transitions.add( new RegexEngine.NFA.Transition("q14", "eps", "q15") );  // a+_(b*_c|d_e)+_f+
+    transitions.add( new RegexEngine.NFA.Transition("q5", "eps", "q6") );
+    transitions.add( new RegexEngine.NFA.Transition("q7", "c", "q8") );      // c
+    transitions.add( new RegexEngine.NFA.Transition("q6", "eps", "q7") );    // b*_c
+    transitions.add( new RegexEngine.NFA.Transition("q9", "d", "q10") );      // d
+    transitions.add( new RegexEngine.NFA.Transition("q11", "e", "q12") );    // e
+    transitions.add( new RegexEngine.NFA.Transition("q10", "eps", "q11") );   // d_e
+    transitions.add( new RegexEngine.NFA.Transition("q13", "eps", "q5") );   // b*_c|d_e
+    transitions.add( new RegexEngine.NFA.Transition("q13", "eps", "q9") );
+    transitions.add( new RegexEngine.NFA.Transition("q8", "eps", "q14") );
+    transitions.add( new RegexEngine.NFA.Transition("q12", "eps", "q14") );
+    transitions.add( new RegexEngine.NFA.Transition("q15", "eps", "q13") );  // (b*_c|d_e)+
+    transitions.add( new RegexEngine.NFA.Transition("q14", "eps", "q15") );
+    transitions.add( new RegexEngine.NFA.Transition("q2", "eps", "q13") );   // a+_(b*_c|d_e)+
+    transitions.add( new RegexEngine.NFA.Transition("q16", "f", "q17") );    // f
+    transitions.add( new RegexEngine.NFA.Transition("q18", "eps", "q16") );  // f+
+    transitions.add( new RegexEngine.NFA.Transition("q17", "eps", "q18") );
+    transitions.add( new RegexEngine.NFA.Transition("q15", "eps", "q16") );  // a+_(b*_c|d_e)+_f+
 
     assertEquals( "q0", abcdef.start );
-    assertEquals( "q17", abcdef.end );
+    assertEquals( "q18", abcdef.end );
     assertEquals( true, abcdef.states.containsAll(states) );
     assertEquals( abcdef.transitions.size(), transitions.size() );
 
@@ -213,6 +219,7 @@ public class generateNFA_Test {
     states.add("q6");   // ' ' space character
     states.add("q7");    
     states.add("q8");   // *
+    states.add("q9");
 
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
     transitions.add( new RegexEngine.NFA.Transition("q0", "a", "q1") );      // a
@@ -223,11 +230,12 @@ public class generateNFA_Test {
     transitions.add( new RegexEngine.NFA.Transition("q6", " ", "q7") );      // ' ' space character
     transitions.add( new RegexEngine.NFA.Transition("q8", "eps", "q6") );    //  *
     transitions.add( new RegexEngine.NFA.Transition("q7", "eps", "q8") );     
+    transitions.add( new RegexEngine.NFA.Transition("q8", "eps", "q9") );     
     transitions.add( new RegexEngine.NFA.Transition("q5", "eps", "q8") );    // (a_ _b)_( *)
 
 
     assertEquals( "q0", ab.start );
-    assertEquals( "q8", ab.end );
+    assertEquals( "q9", ab.end );
     assertEquals( true, ab.states.containsAll(states) );
     assertEquals( ab.transitions.size(), transitions.size() );
 

@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.List;
-//import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -239,7 +239,9 @@ public class RegexEngine {
         for ( int i=0; i < input.length(); i++ ) {
             char ch = input.charAt(i);
 
-            // iterate over every transition
+            // perform any epsilon transitions
+
+            // find and take all possible transitions
             for ( int j=0; j < nfa.transitions.size(); j++ ) {
                 //a
             }
@@ -269,8 +271,8 @@ public class RegexEngine {
         // instance variables
         public String start = "";
         public String end = "";
-        public Set<String> states = new HashSet<String>();
-        public Set<Transition> transitions = new HashSet<Transition>();
+        public List<String> states = new ArrayList<String>();
+        public List<Transition> transitions = new ArrayList<Transition>();
 
         // static variables
         static int numberOfStates = 0;
@@ -299,17 +301,20 @@ public class RegexEngine {
         static NFA kleeneStar(NFA nfa) {
             NFA A = nfa;
 
-            // add a new state to A
-            String startEnd = newState();
-            A.states.add( startEnd );
+            // add 2 new states to A
+            String start = newState();
+            String end = newState();
+            A.states.add( start );
+            A.states.add( end );
 
-            // add epsilon transitions from new state to start of A and from end of A to new state
-            A.transitions.add( new Transition(startEnd, "eps", A.start) );
-            A.transitions.add( new Transition(A.end, "eps", startEnd) );
+            // add epsilon transitions
+            A.transitions.add( new Transition(start, "eps", A.start) );
+            A.transitions.add( new Transition(A.end, "eps", start) );
+            A.transitions.add( new Transition(start, "eps", end) );
 
-            // Change A's start and end to new state
-            A.start = startEnd;
-            A.end = startEnd;
+            // Change A's start and end to new states
+            A.start = start;
+            A.end = end;
 
             return A;
         }

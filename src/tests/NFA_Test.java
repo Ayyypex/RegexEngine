@@ -61,14 +61,16 @@ public class NFA_Test {
     states.add("q0");
     states.add("q1");
     states.add("q2");
+    states.add("q3");
 
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
     transitions.add( new RegexEngine.NFA.Transition("q0", "b", "q1") );
     transitions.add( new RegexEngine.NFA.Transition("q2", "eps", "q0") );
     transitions.add( new RegexEngine.NFA.Transition("q1", "eps", "q2") );
+    transitions.add( new RegexEngine.NFA.Transition("q2", "eps", "q3") );
 
     assertEquals( "q2", bStar.start );
-    assertEquals( "q2", bStar.end );
+    assertEquals( "q3", bStar.end );
     assertEquals( true, bStar.states.containsAll(states) );
     assertEquals( bStar.transitions.size(), transitions.size() );
 
