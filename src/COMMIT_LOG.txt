@@ -1,3 +1,10 @@
+\\---------------- Commit #32 on 25/8/2022 ------------------------------------------------//
+Changed order of functions such that helper functions are at the top and the functions that
+use them go below. The order in which the main function calls them is also considered. For
+example, addConcatenations() goes before toPostfix().
+
+
+
 \\---------------- Commit #31 on 25/8/2022 ------------------------------------------------//
 Removed some unused stuff.
 

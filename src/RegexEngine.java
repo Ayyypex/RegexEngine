@@ -40,17 +40,6 @@ public class RegexEngine {
         }
     }
 
-    // checks if regex string contains any illegal character
-    static boolean validRegex(String regex) {
-        for ( int i=0; i < regex.length(); i++ ) {
-            char ch = regex.charAt(i);
-            if ( !validChar(ch) && !validSymbol(ch) ) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     // checks if character is valid
     static boolean validChar(char ch) {
         if ( !Character.isLetterOrDigit(ch) && ch != ' ' ) {
@@ -65,6 +54,50 @@ public class RegexEngine {
             return true;
         }
         return false;
+    }
+
+    // returns the precedence of a character
+    static int precedenceOf(char ch) {
+        if ( ch == '*' || ch == '+' ) {
+            return 2;
+        }
+        else if ( ch  == '_' ) {
+            return 1;
+        }
+        return 0;
+    }
+
+    // checks if regex string contains any illegal characters
+    static boolean validRegex(String regex) {
+        for ( int i=0; i < regex.length(); i++ ) {
+            char ch = regex.charAt(i);
+            if ( !validChar(ch) && !validSymbol(ch) ) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // adds concatenation symbols to an infix string
+    static String addConcatenations(String infix) {
+        String output = "";
+
+        // iterate over every character
+        for ( int i=0; i < infix.length(); i++ ) {
+            char ch = infix.charAt(i);
+            output += ch;
+
+            // if character is not ( or |, then investigate the next
+            if ( ch != '(' && ch != '|' && i < infix.length()-1 ) {
+                char next = infix.charAt(i+1);
+                // if next character is not a symbol (except left bracket) then add concatenation symbol
+                if ( validChar(next) ||  next == '(' ) {       
+                    output += '_';
+                }
+            }
+        }
+
+        return output;
     }
 
     // converts infix expression to postfix
@@ -113,40 +146,7 @@ public class RegexEngine {
         return postfix;
     }
 
-    // returns the precedence of a character
-    static int precedenceOf(char ch) {
-        if ( ch == '*' || ch == '+' ) {
-            return 2;
-        }
-        else if ( ch  == '_' ) {
-            return 1;
-        }
-        return 0;
-    }
-
-    // adds concatenation symbols to an infix string
-    static String addConcatenations(String infix) {
-        String output = "";
-
-        // iterate over every character
-        for ( int i=0; i < infix.length(); i++ ) {
-            char ch = infix.charAt(i);
-            output += ch;
-
-            // if character is not ( or |, then investigate the next
-            if ( ch != '(' && ch != '|' && i < infix.length()-1 ) {
-                char next = infix.charAt(i+1);
-                // if next character is not a symbol (except left bracket '(' ) then add concatenation symbol
-                if ( validChar(next) ||  next == '(' ) {       
-                    output += '_';
-                }
-            }
-        }
-
-        return output;
-    }
-
-    //
+    // generates an NFA from a postfix regex expression
     static NFA generateNFA(String postfix) {
         Stack<NFA> st = new Stack<>();
 
@@ -186,7 +186,7 @@ public class RegexEngine {
 
                 NFA B = st.pop();
                 NFA A = st.pop();
-                st.push( NFA.concatenate(A, B) );
+                st.push( NFA.concatenate(A,B) );
                 A = null;
                 B = null;
             }
@@ -200,7 +200,7 @@ public class RegexEngine {
 
                 NFA B = st.pop();
                 NFA A = st.pop();
-                st.push( NFA.alternate(A, B) );
+                st.push( NFA.alternate(A,B) );
                 A = null;
                 B = null;
             }
@@ -251,7 +251,7 @@ public class RegexEngine {
             return state;
         }
     
-        // 
+        // perform kleeneStar operation
         static NFA kleeneStar(NFA nfa) {
             NFA A = nfa;
 
@@ -270,7 +270,7 @@ public class RegexEngine {
             return A;
         }
     
-        // 
+        // perform kleenePlus operation
         static NFA kleenePlus(NFA nfa) {
             NFA A = nfa;
 
@@ -288,7 +288,7 @@ public class RegexEngine {
             return A;
         }
     
-        // 
+        // perform concatenate operation
         static NFA concatenate(NFA nfa1, NFA nfa2) {
             NFA A = nfa1;
             NFA B = nfa2;
@@ -306,7 +306,7 @@ public class RegexEngine {
             return A;
         }
     
-        // 
+        // perform alternate operation
         static NFA alternate(NFA nfa1, NFA nfa2) {
             NFA A = nfa1;
             NFA B = nfa2;
@@ -334,12 +334,12 @@ public class RegexEngine {
             return A;
         }
 
-        // Transition class to represent a simple triplet
+        // Transition class to represent a simple String triplet
         static class Transition {
             public String state = "";
             public String input = "";
             public String result = "";
-            public String transition = "";
+            public String transition = "";      // used for a quicker way to check if transitions are equal 
 
             // Constructor
             public Transition(String state, String input, String result) {
