@@ -1,29 +1,34 @@
-\\---------------- Commit #39 on 26/8/2022 ------------------------------------------------//
+\\---------------- Commit #41 on 27/8/2022 ------------------------------------------------//
+Wrote remaining tests for epsClosure(). Seems to work as intended.
+
+
+
+\\---------------- Commit #40 on 26/8/2022 ------------------------------------------------//
 Wrote out first test for epsClosure(). I will write tests for basic NFAs to test each 
 operation, then use some of the NFAs from previous tests.
 
 
 
-\\---------------- Commit #38 on 26/8/2022 ------------------------------------------------//
+\\---------------- Commit #39 on 26/8/2022 ------------------------------------------------//
 I have implemented epsClosure(). It feels a little iffy to be using it like I have so I 
 might try to find a different way to handle epsilon transitions.
 
 
 
-\\---------------- Commit #37 on 26/8/2022 ------------------------------------------------//
+\\---------------- Commit #38 on 26/8/2022 ------------------------------------------------//
 KleeneStar test passes but I now have 3 instances of duplicate code that I will try to 
 place into its own function.
 
 
 
-\\---------------- Commit #36 on 26/8/2022 ------------------------------------------------//
+\\---------------- Commit #37 on 26/8/2022 ------------------------------------------------//
 Implemented simulateNFA(). First test now passes. Ran into issues due to me comparing
 strings incorrectly. I have since learned that "==" tests for reference equality (whether
 they are the same object). 
 
 
 
-\\---------------- Commit #35 on 26/8/2022 ------------------------------------------------//
+\\---------------- Commit #36 on 26/8/2022 ------------------------------------------------//
 Made changes accross source file and test files to accurately reflect new representation 
 of the KleeneStar operation.
 
@@ -31,24 +36,24 @@ Changed the NFA's Sets back to Lists due to Set not having a correspnding get() 
 
 
 
-\\---------------- Commit #34 on 26/8/2022 ------------------------------------------------//
+\\---------------- Commit #35 on 26/8/2022 ------------------------------------------------//
 Refactored array lists to be sets and some implementation of simulateNFA().
 
 
 
-\\---------------- Commit #33 on 26/8/2022 ------------------------------------------------//
+\\---------------- Commit #34 on 26/8/2022 ------------------------------------------------//
 Created simulateNFA() test file.
 
 
 
-\\---------------- Commit #32 on 26/8/2022 ------------------------------------------------//
+\\---------------- Commit #33 on 26/8/2022 ------------------------------------------------//
 Changed order of functions such that helper functions are at the top and the functions that
 use them go below. The order in which the main function calls them is also considered. For
 example, addConcatenations() goes before toPostfix().
 
 
 
-\\---------------- Commit #31 on 25/8/2022 ------------------------------------------------//
+\\---------------- Commit #32 on 25/8/2022 ------------------------------------------------//
 Removed some unused stuff.
 
 
