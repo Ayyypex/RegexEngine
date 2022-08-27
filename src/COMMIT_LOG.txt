@@ -1,3 +1,8 @@
+\\---------------- Commit #46 on 27/8/2022 ------------------------------------------------//
+Compacted the while loops into one.
+
+
+
 \\---------------- Commit #45 on 27/8/2022 ------------------------------------------------//
 Program now checks if it's run in verbose mode. If it is, then it will print the NFA's 
 transition table and take in user's character input 1 by 1, simulating the current state

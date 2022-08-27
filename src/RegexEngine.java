@@ -43,35 +43,26 @@ public class RegexEngine {
         }
         System.out.println("ready");
         
+
         // read each line until ctrl+c
-        while ( true && !verbose ) {
-            String line = reader.readLine();
-            // do some input validation for line
-
-            // print true or false depending on if the NFA accepts the input
-            if ( simulateNFA(finalNFA, line) ) {
-                System.out.println("true");
-            }
-            else { 
-                System.out.println("false");
-            }
-        }
-
-        // read each line until ctrl+c 
         String completeInput = "";
-        while ( true && verbose ) {
-            // print true or false depending on if the NFA accepts the input
-            if ( simulateNFA(finalNFA, completeInput) ) {
-                System.out.println("true");
-            }
-            else { 
-                System.out.println("false");
-            }
+        while ( true ) {
+            if ( verbose ) {
+                // print true or false depending on if the NFA accepts the input
+                System.out.println( String.valueOf( simulateNFA(finalNFA, completeInput) ) );
 
-            String line = reader.readLine();
-            // do some input validation for line / check if length > 1?
+                String line = reader.readLine();
+                // do some input validation for line / check if length > 1?
 
-            completeInput += line;
+                completeInput += line;
+
+            } else {
+                String line = reader.readLine();
+                // do some input validation for line
+
+                // print true or false depending on if the NFA accepts the input
+                System.out.println( String.valueOf( simulateNFA(finalNFA, line) ) );
+            }           
         }
     }
 
