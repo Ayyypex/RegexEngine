@@ -1,3 +1,8 @@
+\\---------------- Commit #47 on 27/8/2022 ------------------------------------------------//
+Defined functions needed for printing the transition table of an NFA.
+
+
+
 \\---------------- Commit #46 on 27/8/2022 ------------------------------------------------//
 Compacted the while loops into one.
 

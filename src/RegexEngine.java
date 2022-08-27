@@ -14,7 +14,7 @@ public class RegexEngine {
     public static void main(String[] args) 
         throws IOException 
     {
-        // check if we program is run in verbose mode
+        // check if program is run in verbose mode
         boolean verbose  = false;
         if ( args.length == 1 && args[0].contains("-v") ) {
             verbose = true;
@@ -39,11 +39,21 @@ public class RegexEngine {
 
         // print table if verbose, then print ready
         if ( verbose ) {
-            NFA.printTable(finalNFA);
+            int rows = finalNFA.states.size() + 1;
+            int cols = uniqueCharacters(regex);
+
+            String[][] table = NFA.tableOf(finalNFA, rows, cols);
+
+            for ( int i=0; i < rows; i++ ) {
+                String rowOutput = "";
+                for ( int j=0; j < cols; j++ ) {
+                    rowOutput += table[i][j];
+                }
+                System.out.println(rowOutput);
+            }
         }
         System.out.println("ready");
         
-
         // read each line until ctrl+c
         String completeInput = "";
         while ( true ) {
@@ -102,6 +112,11 @@ public class RegexEngine {
             }
         }
         return true;
+    }
+
+    // uniqueCharacters
+    static int uniqueCharacters(String regex) {
+        return 0;
     }
 
     // adds concatenation symbols to an infix string
@@ -433,8 +448,17 @@ public class RegexEngine {
         }
 
         // prints transition table of an NFA
-        static void printTable(NFA nfa) {
-            //
+        static String[][] tableOf(NFA nfa, int rows, int cols) {
+            String[][] table = new String[rows][cols];
+
+            // initialize 2D array
+            for ( int i=0; i < rows; i++ ) {
+                for ( int j=0; j < cols; j++ ) {
+                    table[i][j] = "";
+                }
+            }
+
+            return table;
         }
 
         // Transition class to represent a simple String triplet
