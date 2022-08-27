@@ -1,3 +1,10 @@
+\\---------------- Commit #42 on 27/8/2022 ------------------------------------------------//
+Wrote remaining tests for simulateNFA(). Seems to work as intended. I have only tested 
+valid regex tests so far. I believe I should add some more input validation later as there
+are some marks allocated for it.
+
+
+
 \\---------------- Commit #41 on 27/8/2022 ------------------------------------------------//
 Wrote remaining tests for epsClosure(). Seems to work as intended.
 

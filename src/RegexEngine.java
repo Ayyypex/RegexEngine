@@ -238,9 +238,6 @@ public class RegexEngine {
         // iterate over each character
         for ( int i=0; i < input.length(); i++ ) {
             String ch = String.valueOf( input.charAt(i) );
-            System.out.println("ch: " + ch);
-            System.out.println("nfaStart: " + nfa.start);
-            System.out.println("nfaEnd: " + nfa.end);
 
             // compute epsilon closure
             currentStates = NFA.epsClosure(nfa, currentStates);
@@ -249,7 +246,6 @@ public class RegexEngine {
             for ( int j=0; j < nfa.transitions.size(); j++ ) {
                 NFA.Transition trans = nfa.transitions.get(j);
                 if ( currentStates.contains(trans.state) && trans.input.equals(ch) ) {
-                    System.out.println("normal trans: " + trans.transition);
                     nextStates.add(trans.result);
                 }
             }
@@ -323,7 +319,6 @@ public class RegexEngine {
 
                     // if new state is 
                     if ( eClose.contains(trans.state) && trans.input.equals("eps") && !eClose.contains(trans.result) ) {
-                        System.out.println("eps trans: " + trans.transition);
                         eClose.add(trans.result);
                         newStateAdded = true;
                     }
