@@ -1,3 +1,15 @@
+\\---------------- Commit #44 on 27/8/2022 ------------------------------------------------//
+Added testing for validChar(), validSymbol(), and precedenceOf(). I have also put them and
+the validRegex() tests all in one file. I didn't need to run parameterized tests, I could
+have created an object array with the input and expected output.
+
+
+
+\\---------------- Commit #43 on 27/8/2022 ------------------------------------------------//
+Going to submit what I've done so far to GradeScope and see if passes the acceptance tests.
+
+
+
 \\---------------- Commit #42 on 27/8/2022 ------------------------------------------------//
 Wrote remaining tests for simulateNFA(). Seems to work as intended. I have only tested 
 valid regex tests so far. I believe I should add some more input validation later as there
