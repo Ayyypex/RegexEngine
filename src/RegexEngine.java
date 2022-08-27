@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Collections;
 
 // compiled with: javac RegexEngine.java -d tests
 //      run with: java RegexEngine (-v for verbose mode)
@@ -39,11 +40,15 @@ public class RegexEngine {
 
         // print table if verbose, then print ready
         if ( verbose ) {
+            List<String> inputs = uniqueInput(regex);
+
+            // get number of rows and cols, + 1 for table header and state column
             int rows = finalNFA.states.size() + 1;
-            int cols = uniqueCharacters(regex);
+            int cols = inputs.size() + 1;
 
-            String[][] table = NFA.tableOf(finalNFA, rows, cols);
+            String[][] table = NFA.tableOf(finalNFA, inputs, rows, cols);
 
+            // print output
             for ( int i=0; i < rows; i++ ) {
                 String rowOutput = "";
                 for ( int j=0; j < cols; j++ ) {
@@ -51,6 +56,7 @@ public class RegexEngine {
                 }
                 System.out.println(rowOutput);
             }
+            System.out.println("\n");
         }
         System.out.println("ready");
         
@@ -114,9 +120,31 @@ public class RegexEngine {
         return true;
     }
 
-    // uniqueCharacters
-    static int uniqueCharacters(String regex) {
-        return 0;
+    // count number of unique inputs that will result from the regex
+    static List<String> uniqueInput(String regex) {
+        List<String> inputs = new ArrayList<String>();
+
+        // if it has a length of 1, then there will be no epsilon transitions
+        if ( regex.length() == 1 && validChar(regex.charAt(0)) ) {
+            inputs.add(regex);
+            return inputs;
+        }
+        
+        // iterate over each character
+        for (int i=0; i < regex.length(); i++ ) {
+            char ch = regex.charAt(i);
+
+            // if character is valid and not in set, add it to set
+            if ( validChar(ch) && !inputs.contains( String.valueOf(ch) ) ) {
+                inputs.add( String.valueOf(ch) );
+            }
+        }
+
+        // sort inputs and add epsilon to the start
+        Collections.sort(inputs);
+        inputs.add(0,"eps");
+
+        return inputs;
     }
 
     // adds concatenation symbols to an infix string
@@ -448,14 +476,34 @@ public class RegexEngine {
         }
 
         // prints transition table of an NFA
-        static String[][] tableOf(NFA nfa, int rows, int cols) {
+        static String[][] tableOf(NFA nfa, List<String> inputs, int rows, int cols) {
             String[][] table = new String[rows][cols];
 
             // initialize 2D array
             for ( int i=0; i < rows; i++ ) {
                 for ( int j=0; j < cols; j++ ) {
-                    table[i][j] = "";
+                    table[i][j] = " ";
                 }
+            }
+
+            // set table header
+            for ( int i=0; i < inputs.size(); i++ ) {
+                table[0][i+1] = inputs.get(i) + " ";
+            }
+
+            // set table state column
+            for ( int i=0; i < nfa.states.size(); i++ ) {
+                table[i+1][0] = nfa.states.get(i) + " ";
+            }
+
+            // add transitions to table
+            for ( int i=0; i < nfa.transitions.size(); i++ ) {
+                Transition trans = nfa.transitions.get(i);
+                
+                int r = nfa.states.indexOf(trans.state) + 1;
+                int c = inputs.indexOf(trans.input) + 1;
+
+                table[r][c] += trans.result + ",";
             }
 
             return table;
