@@ -14,6 +14,13 @@ public class RegexEngine {
     public static void main(String[] args) 
         throws IOException 
     {
+        // check if we program is run in verbose mode
+        boolean verbose  = false;
+        if ( args.length == 1 && args[0].contains("-v") ) {
+            verbose = true;
+        }
+
+        // create reader to read from System.in
         BufferedReader reader = new BufferedReader( new InputStreamReader(System.in) );
 
         // get regular expression to test
@@ -30,11 +37,14 @@ public class RegexEngine {
         // generate NFA structure
         NFA finalNFA = generateNFA(postfix);
 
-        // if(verbose) printTable(NFA) ; 
+        // print table if verbose, then print ready
+        if ( verbose ) {
+            NFA.printTable(finalNFA);
+        }
         System.out.println("ready");
         
         // read each line until ctrl+c
-        while (true) {
+        while ( true && !verbose ) {
             String line = reader.readLine();
             // do some input validation for line
 
@@ -45,6 +55,23 @@ public class RegexEngine {
             else { 
                 System.out.println("false");
             }
+        }
+
+        // read each line until ctrl+c 
+        String completeInput = "";
+        while ( true && verbose ) {
+            // print true or false depending on if the NFA accepts the input
+            if ( simulateNFA(finalNFA, completeInput) ) {
+                System.out.println("true");
+            }
+            else { 
+                System.out.println("false");
+            }
+
+            String line = reader.readLine();
+            // do some input validation for line / check if length > 1?
+
+            completeInput += line;
         }
     }
 
@@ -412,6 +439,11 @@ public class RegexEngine {
             A.end = end;
 
             return A;
+        }
+
+        // prints transition table of an NFA
+        static void printTable(NFA nfa) {
+            //
         }
 
         // Transition class to represent a simple String triplet

@@ -1,3 +1,10 @@
+\\---------------- Commit #45 on 27/8/2022 ------------------------------------------------//
+Program now checks if it's run in verbose mode. If it is, then it will print the NFA's 
+transition table and take in user's character input 1 by 1, simulating the current state
+of the NFA.
+
+
+
 \\---------------- Commit #44 on 27/8/2022 ------------------------------------------------//
 Added testing for validChar(), validSymbol(), and precedenceOf(). I have also put them and
 the validRegex() tests all in one file. I didn't need to run parameterized tests, I could
