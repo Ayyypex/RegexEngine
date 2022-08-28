@@ -1,3 +1,8 @@
+\\---------------- Commit #58 on 28/8/2022 ------------------------------------------------//
+Applied Javadoc comments to RegexEngine.java
+
+
+
 \\---------------- Commit #57 on 28/8/2022 ------------------------------------------------//
 Moved tests together where it made sense to.
 

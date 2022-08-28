@@ -48,7 +48,6 @@ public class expression_Test {
 
   @Test
   public void toPostfix_Test() {
-    // input and expected output
     Object[][] input =  {
         { "a+_b", "a+b_" },
         { "b*_a_b", "b*a_b_" },
@@ -65,7 +64,6 @@ public class expression_Test {
         { "(a_ _b)_( *)", "a _b_ *_" }
     };
     
-    // test each input against its expected output
     for ( int i=0; i < input.length; i++ ) {
       assertEquals( input[i][1], RegexEngine.toPostfix( String.valueOf(input[i][0]) ) );
     }
