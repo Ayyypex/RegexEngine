@@ -110,7 +110,7 @@ public class validation_Test {
   }
 
   @Test
-  public void badSymbolUsage_Test() {
+  public void checkSymbolUsage_Test() {
     Object[][] input = {
       { "(ab*)", false },
       { "(a|b)c", false },
@@ -129,7 +129,7 @@ public class validation_Test {
     };
 
     for ( int i=0; i < input.length; i++ ) {
-      assertEquals( input[i][1], RegexEngine.badSymbolUsage( String.valueOf(input[i][0]) ) );
+      assertEquals( input[i][1], RegexEngine.checkSymbolUsage( String.valueOf(input[i][0]) ) );
     }
   }
 
@@ -163,7 +163,7 @@ public class validation_Test {
   }
 
   @Test
-  public void precedenceOf_Test() {
+  public void getPrecedence_Test() {
     Object[][] input =  {
       { '*', 2 },
       { '+', 2 },
@@ -181,7 +181,7 @@ public class validation_Test {
     };
 
     for ( int i=0; i < input.length; i++ ) {
-      assertEquals( input[i][1], RegexEngine.precedenceOf( String.valueOf(input[i][0]).charAt(0) ) );
+      assertEquals( input[i][1], RegexEngine.getPrecedence( String.valueOf(input[i][0]).charAt(0) ) );
     }
   }
 }

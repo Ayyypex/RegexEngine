@@ -8,10 +8,9 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Collections;
 
-// compiled with: javac RegexEngine.java -d tests
-//      run with: java RegexEngine (-v for verbose mode)
-
+/* */
 public class RegexEngine {
+    /* */
     public static void main(String[] args) 
         throws IOException 
     {
@@ -41,7 +40,7 @@ public class RegexEngine {
         // print table if verbose
         if ( verbose ) {
             // get transition table
-            String[][] table = NFA.tableOf(finalNFA);
+            String[][] table = NFA.getTable(finalNFA);
             int rows = table.length;
             int cols = table[0].length;
 
@@ -81,6 +80,8 @@ public class RegexEngine {
         }
     }
 
+    /* Summary 
+     *@param @return */
     // checks if character is valid
     static boolean legalChar(char ch) {
         if ( !Character.isLetterOrDigit(ch) && ch != ' ' ) {
@@ -89,6 +90,7 @@ public class RegexEngine {
         return true;
     }
 
+    /* */
     // checks if character is a valid symbol
     static boolean legalSymbol(char ch) {
         if ( ch == '|' || ch == '*' || ch == '+' || ch == '(' || ch == ')' ) {
@@ -97,6 +99,7 @@ public class RegexEngine {
         return false;
     }
 
+    /* */
     // checks if regex string contains any illegal characters
     static boolean legalRegexCharacters(String regex) {
         for ( int i=0; i < regex.length(); i++ ) {
@@ -108,6 +111,7 @@ public class RegexEngine {
         return true;
     }
 
+    /* */
     // checks if regex string uses brackets correctly
     static boolean legalBrackets(String regex) {
         boolean openBracket = false;
@@ -116,22 +120,19 @@ public class RegexEngine {
             char ch = regex.charAt(i);
 
             // left bracket encountered
-            if ( !openBracket && ch == '(' ) {
+            if ( !openBracket && ch == '(' ) {          
                 openBracket = true;
-            }
 
             // right bracket without left one
-            else if ( !openBracket && ch == ')' ) {
+            } else if ( !openBracket && ch == ')' ) {   
                 return false;
-            }
 
             // nested bracket
-            else if ( openBracket && ch == '(' ) {
+            } else if ( openBracket && ch == '(' ) {      
                 return false;
-            }
 
             // bracket closes
-            else if ( openBracket && ch == ')' ) {
+            } else if ( openBracket && ch == ')' ) {      
                 openBracket = false;
             }
         }
@@ -140,8 +141,9 @@ public class RegexEngine {
         return !openBracket;
     }
 
+    /* */
     // checks whether there are duplicate symbols chained together
-    static boolean badSymbolUsage(String regex) {
+    static boolean checkSymbolUsage(String regex) {
         for ( int i=0; i < regex.length()-1; i++ ) {
             char ch = regex.charAt(i);
             char next = regex.charAt(i+1);
@@ -159,23 +161,13 @@ public class RegexEngine {
         return false;
     }
 
+    /* */
     // does some input validation on the regex, not an exhaustive check
     static boolean checkRegex(String regex) {
-        if ( !legalRegexCharacters(regex) || !legalBrackets(regex) || badSymbolUsage(regex) || regex == "" ) {
+        if ( !legalRegexCharacters(regex) || !legalBrackets(regex) || checkSymbolUsage(regex) || regex == "" ) {
             return false;
         }
         return true;
-    }
-
-    // returns the precedence of a character
-    static int precedenceOf(char ch) {
-        if ( ch == '*' || ch == '+' ) {
-            return 2;
-        }
-        else if ( ch  == '_' ) {
-            return 1;
-        }
-        return 0;
     }
 
     // adds concatenation symbols to an infix string
@@ -200,6 +192,18 @@ public class RegexEngine {
         return output;
     }
 
+    /* */
+    // returns the precedence of a character
+    static int getPrecedence(char ch) {
+        if ( ch == '*' || ch == '+' ) {
+            return 2;
+        } else if ( ch  == '_' ) {
+            return 1;
+        }
+        return 0;
+    }
+
+    /* */
     // converts infix expression to postfix
     static String toPostfix(String infix) {
         Stack<Character> st = new Stack<>();
@@ -212,26 +216,23 @@ public class RegexEngine {
             // append 
             if ( legalChar(ch) ) {
                 postfix += ch;
-            }
-
+            
             // push onto stack
-            else if ( ch == '(' ) {
+            } else if ( ch == '(' ) {       
                 st.push(ch);
-            }
 
             // append operators within brackets
-            else if ( ch == ')' ) {
+            } else if ( ch == ')' ) {
                 while ( !st.empty() && st.peek() != '(' ) {
                     postfix += st.pop();
                 }
                 // pop ( off
                 st.pop();
-            }
 
             // push operators: | + * _
-            else {
+            } else {
                 // if top stack element precedence is higher than current element, append top
-                while ( !st.empty() && st.peek() != '(' && precedenceOf(ch) <= precedenceOf(st.peek()) ) {
+                while ( !st.empty() && st.peek() != '(' && getPrecedence(ch) <= getPrecedence(st.peek()) ) {
                     postfix += st.pop();
                 }
                 st.push(ch);
@@ -246,6 +247,7 @@ public class RegexEngine {
         return postfix;
     }
 
+    /* */
     // generates an NFA from a postfix regex expression
     static NFA generateNFA(String postfix) {
         Stack<NFA> st = new Stack<>();
@@ -255,9 +257,8 @@ public class RegexEngine {
 
             if ( legalChar(ch) ) {
                 st.push( new NFA(ch) );
-            }
 
-            else if ( ch == '*' ) {
+            } else if ( ch == '*' ) {
                 // error
                 if ( st.empty() ) {
                     System.out.println("Error: Kleene Star when stack is empty");
@@ -265,9 +266,8 @@ public class RegexEngine {
                 }
 
                 st.push( NFA.kleeneStar( st.pop() ) );
-            }
 
-            else if ( ch == '+' ) {
+            } else if ( ch == '+' ) {
                 // error
                 if ( st.empty() ) {
                     System.out.println("Error: Kleene Plus when stack is empty");
@@ -275,9 +275,8 @@ public class RegexEngine {
                 }
 
                 st.push( NFA.kleenePlus( st.pop() ) );
-            }
 
-            else if ( ch == '_' ) {
+            } else if ( ch == '_' ) {
                 // error
                 if ( st.size() < 2 ) {
                     System.out.println("Error: Concatenation when there are less than two NFAs on stack");
@@ -289,9 +288,8 @@ public class RegexEngine {
                 st.push( NFA.concatenate(A,B) );
                 A = null;
                 B = null;
-            }
 
-            else if ( ch == '|' ) {
+            } else if ( ch == '|' ) {
                 // error
                 if ( st.size() < 2 ) {
                     System.out.println("Error: Alternation when there are less than two NFAs on stack");
@@ -303,9 +301,8 @@ public class RegexEngine {
                 st.push( NFA.alternate(A,B) );
                 A = null;
                 B = null;
-            }
 
-            else {
+            } else {
                 System.out.println("Error: How'd we get here?");
                 System.exit(1);
             } 
@@ -320,6 +317,7 @@ public class RegexEngine {
         return st.pop();
     }
 
+    /* */
     // simulates the NFA's processing of the input, returns true if NFA accepts input
     static boolean simulateNFA( NFA nfa, String input ) {
         // set up state sets
@@ -332,7 +330,7 @@ public class RegexEngine {
             String ch = String.valueOf( input.charAt(i) );
 
             // compute epsilon closure
-            currentStates = NFA.epsClosure(nfa, currentStates);
+            currentStates = NFA.getEpsClosure(nfa, currentStates);
 
             // find and take all possible transitions, add resulting states to nextStates
             for ( int j=0; j < nfa.transitions.size(); j++ ) {
@@ -354,7 +352,7 @@ public class RegexEngine {
         }
 
         // compute epsilon closure
-        currentStates = NFA.epsClosure(nfa, currentStates);
+        currentStates = NFA.getEpsClosure(nfa, currentStates);
         
         // check if NFA is in an accepting state
         if ( currentStates.contains(nfa.end) ) {
@@ -364,6 +362,7 @@ public class RegexEngine {
         }
     }
 
+    /* */
     // NFA class to represent FSA
     static class NFA {
         // instance variables
@@ -375,11 +374,12 @@ public class RegexEngine {
         // static variables
         static int numberOfStates = 0;
     
+        /* */
         // Constructor - creates base NFA for single character
         public NFA(char ch) {
-            String state = newState();
+            String state = getNewState();
             String input = String.valueOf(ch);
-            String result = newState();
+            String result = getNewState();
 
             this.start = state;
             this.end = result;
@@ -388,15 +388,17 @@ public class RegexEngine {
             this.transitions.add( new Transition(state, input, result) );
         }
 
+        /* */
         // returns a new unused state name and increments number of states
-        static String newState() {
+        static String getNewState() {
             String state = "q" + String.valueOf(NFA.numberOfStates);
             NFA.numberOfStates++;
             return state;
         }
 
+        /* */
         // returns set of states reachable from current state set by taking only epsilon transitions
-        static Set<String> epsClosure(NFA nfa, Set<String> states)  {
+        static Set<String> getEpsClosure(NFA nfa, Set<String> states)  {
             // 
             Set<String> eClose = new HashSet<String>();
             eClose.addAll(states);
@@ -420,13 +422,14 @@ public class RegexEngine {
             return eClose;
         }
     
+        /* */
         // perform kleeneStar operation
         static NFA kleeneStar(NFA nfa) {
             NFA A = nfa;
 
             // add 2 new states to A
-            String start = newState();
-            String end = newState();
+            String start = getNewState();
+            String end = getNewState();
             A.states.add( start );
             A.states.add( end );
 
@@ -442,12 +445,13 @@ public class RegexEngine {
             return A;
         }
     
+        /* */
         // perform kleenePlus operation
         static NFA kleenePlus(NFA nfa) {
             NFA A = nfa;
 
             // add a new state to A
-            String end = newState();
+            String end = getNewState();
             A.states.add( end );
 
             // add epsilon transitions from new state to start of A and from end of A to new state
@@ -460,6 +464,7 @@ public class RegexEngine {
             return A;
         }
     
+        /* */
         // perform concatenate operation
         static NFA concatenate(NFA nfa1, NFA nfa2) {
             NFA A = nfa1;
@@ -478,6 +483,7 @@ public class RegexEngine {
             return A;
         }
     
+        /* */
         // perform alternate operation
         static NFA alternate(NFA nfa1, NFA nfa2) {
             NFA A = nfa1;
@@ -488,8 +494,8 @@ public class RegexEngine {
             A.transitions.addAll(B.transitions);
 
             // add 2 new states to A
-            String start = newState();
-            String end = newState();
+            String start = getNewState();
+            String end = getNewState();
             A.states.add( start );
             A.states.add( end );
 
@@ -506,8 +512,9 @@ public class RegexEngine {
             return A;
         }
 
+        /* */
         // count number of unique inputs in an NFA
-        static List<String> uniqueInput(NFA nfa) {
+        static List<String> getAlphabet(NFA nfa) {
             List<String> inputs = new ArrayList<String>();
             boolean epsilon = false;
 
@@ -518,10 +525,9 @@ public class RegexEngine {
                 // don't add epsilon yet because we will sort later, and we want epsilon at front
                 if ( trans.input == "epsilon" ) {
                     epsilon = true;
-                }
 
                 // new input
-                else if ( !inputs.contains(trans.input) ) {
+                } else if ( !inputs.contains(trans.input) ) {
                     inputs.add(trans.input);
                 }
             }
@@ -537,9 +543,10 @@ public class RegexEngine {
             return inputs;
         }
 
+        /* */
         // prints transition table of an NFA
-        static String[][] tableOf(NFA nfa) {
-            List<String> inputs = uniqueInput(nfa);
+        static String[][] getTable(NFA nfa) {
+            List<String> inputs = getAlphabet(nfa);
 
             // get number of rows and cols, + 1 for table header and state column
             int rows = nfa.states.size() + 1;
@@ -614,6 +621,7 @@ public class RegexEngine {
             return table;
         }
 
+        /* */
         // Transition class to represent a simple String triplet
         static class Transition {
             public String state = "";
@@ -621,6 +629,7 @@ public class RegexEngine {
             public String result = "";
             public String transition = "";      // used for a quicker way to check if transitions are equal 
 
+            /* */
             // Constructor
             public Transition(String state, String input, String result) {
                 this.state = state;

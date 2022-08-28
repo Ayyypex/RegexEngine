@@ -11,4 +11,4 @@ src/NFA_Test.class
 src/generateNFA_Test.class
 src/simulateNFA_Test.class
 commands.txt
-src/epsClosure_Test.class
+src/getEpsClosure_Test.class

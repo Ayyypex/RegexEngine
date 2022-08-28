@@ -46,10 +46,10 @@ public class NFA_Test {
   }
 
   @Test
-  public void newState_Test() {
+  public void getNewState_Test() {
     int number = 3;
     for ( int i=0; i < number; i++ ) {
-        RegexEngine.NFA.newState();
+        RegexEngine.NFA.getNewState();
     }
     assertEquals( number, RegexEngine.NFA.numberOfStates );
   }
@@ -174,7 +174,7 @@ public class NFA_Test {
   }
 
   @Test
-  public void uniqueInput_Test1() {
+  public void getAlphabet_Test1() {
     // create NFA
     String regex = "a";
     regex = RegexEngine.addConcatenations(regex);
@@ -185,7 +185,7 @@ public class NFA_Test {
     List<String> expected = new ArrayList<String>();
     expected.add("a");
 
-    List<String> result = RegexEngine.NFA.uniqueInput(nfa);
+    List<String> result = RegexEngine.NFA.getAlphabet(nfa);
 
     // compare
     assertEquals( expected.size(), result.size() );
@@ -193,7 +193,7 @@ public class NFA_Test {
   }
 
   @Test
-  public void uniqueInput_Test2() {
+  public void getAlphabet_Test2() {
     String regex = "a*";
     regex = RegexEngine.addConcatenations(regex);
     String postfix = RegexEngine.toPostfix(regex);
@@ -203,14 +203,14 @@ public class NFA_Test {
     expected.add("epsilon");
     expected.add("a");
 
-    List<String> result = RegexEngine.NFA.uniqueInput(nfa);
+    List<String> result = RegexEngine.NFA.getAlphabet(nfa);
 
     assertEquals( expected.size(), result.size() );
     assertTrue( expected.equals(result) );
   }
 
   @Test
-  public void uniqueInput_Test3() {
+  public void getAlphabet_Test3() {
     String regex = "a|b";
     regex = RegexEngine.addConcatenations(regex);
     String postfix = RegexEngine.toPostfix(regex);
@@ -221,14 +221,14 @@ public class NFA_Test {
     expected.add("a");
     expected.add("b");
 
-    List<String> result = RegexEngine.NFA.uniqueInput(nfa);
+    List<String> result = RegexEngine.NFA.getAlphabet(nfa);
 
     assertEquals( expected.size(), result.size() );
     assertTrue( expected.equals(result) );
   }
 
   @Test
-  public void uniqueInput_Test4() {
+  public void getAlphabet_Test4() {
     String regex = "(a|bc1)+( de2)";
     regex = RegexEngine.addConcatenations(regex);
     String postfix = RegexEngine.toPostfix(regex);
@@ -245,14 +245,14 @@ public class NFA_Test {
     expected.add("d");
     expected.add("e");
 
-    List<String> result = RegexEngine.NFA.uniqueInput(nfa);
+    List<String> result = RegexEngine.NFA.getAlphabet(nfa);
 
     assertEquals( expected.size(), result.size() );
     assertTrue( expected.equals(result) );
   }
 
   @Test
-  public void uniqueInput_Test5() {
+  public void getAlphabet_Test5() {
     String regex = "a(b|cd|e*f|g+h|i)(jk)*";
     regex = RegexEngine.addConcatenations(regex);
     String postfix = RegexEngine.toPostfix(regex);
@@ -272,14 +272,14 @@ public class NFA_Test {
     expected.add("j");
     expected.add("k");
 
-    List<String> result = RegexEngine.NFA.uniqueInput(nfa);
+    List<String> result = RegexEngine.NFA.getAlphabet(nfa);
 
     assertEquals( expected.size(), result.size() );
     assertTrue( expected.equals(result) );
   }
 
   @Test
-  public void tableOf_Test1() {
+  public void getTable_Test1() {
     String regex = "a";
     regex = RegexEngine.addConcatenations(regex);
     String postfix = RegexEngine.toPostfix(regex);
@@ -291,13 +291,13 @@ public class NFA_Test {
                             { "*q1 | ",  "   | " }};
     
     // resulting table
-    String[][] result = RegexEngine.NFA.tableOf(nfa);
+    String[][] result = RegexEngine.NFA.getTable(nfa);
 
     assertTrue( Arrays.deepEquals(expected, result) );
   }
 
   @Test
-  public void tableOf_Test2() {
+  public void getTable_Test2() {
     String regex = "ab";
     regex = RegexEngine.addConcatenations(regex);
     String postfix = RegexEngine.toPostfix(regex);
@@ -309,13 +309,13 @@ public class NFA_Test {
                             { "q2  | ",  "        | ",  "   | ",  "q3 | " }, 
                             { "*q3 | ",  "        | ",  "   | ",  "   | " }};
     
-    String[][] result = RegexEngine.NFA.tableOf(nfa);
+    String[][] result = RegexEngine.NFA.getTable(nfa);
 
     assertTrue( Arrays.deepEquals(expected, result) );
   }
 
   @Test
-  public void tableOf_Test3() {
+  public void getTable_Test3() {
     String regex = "abc*";
     regex = RegexEngine.addConcatenations(regex);
     String postfix = RegexEngine.toPostfix(regex);
@@ -331,13 +331,13 @@ public class NFA_Test {
                             { "q6  | ",  "q4,q7   | ",  "   | ",  "   | ",  "   | " }, 
                             { "*q7 | ",  "        | ",  "   | ",  "   | ",  "   | " }};
     
-    String[][] result = RegexEngine.NFA.tableOf(nfa);
+    String[][] result = RegexEngine.NFA.getTable(nfa);
 
     assertTrue( Arrays.deepEquals(expected, result) );
   }
 
   @Test
-  public void tableOf_Test4() {
+  public void getTable_Test4() {
     String regex = "ab +";
     regex = RegexEngine.addConcatenations(regex);
     String postfix = RegexEngine.toPostfix(regex);
@@ -352,13 +352,13 @@ public class NFA_Test {
                             { "q5  | ",  "q6      | ",  "   | ",  "   | ",  "   | " }, 
                             { "*q6 | ",  "q4      | ",  "   | ",  "   | ",  "   | " }};
     
-    String[][] result = RegexEngine.NFA.tableOf(nfa);
+    String[][] result = RegexEngine.NFA.getTable(nfa);
 
     assertTrue( Arrays.deepEquals(expected, result) );
   }
 
   @Test
-  public void tableOf_Test5() {
+  public void getTable_Test5() {
     String regex = "a|b";
     regex = RegexEngine.addConcatenations(regex);
     String postfix = RegexEngine.toPostfix(regex);
@@ -372,7 +372,7 @@ public class NFA_Test {
                             { ">q4 | ",  "q0,q2   | ",  "   | ",  "   | " }, 
                             { "*q5 | ",  "        | ",  "   | ",  "   | " }};
     
-    String[][] result = RegexEngine.NFA.tableOf(nfa);
+    String[][] result = RegexEngine.NFA.getTable(nfa);
 
     assertTrue( Arrays.deepEquals(expected, result) );
   }

@@ -7,10 +7,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 
 
-// compile with: javac -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar epsClosure_Test.java
-//     run with: java -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore epsClosure_Test
+// compile with: javac -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar getEpsClosure_Test.java
+//     run with: java -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore getEpsClosure_Test
 
-public class epsClosure_Test {
+public class getEpsClosure_Test {
  
   @Before
   public void init() {
@@ -28,9 +28,9 @@ public class epsClosure_Test {
     // get epsilon closure of NFA's start state
     Set<String> eClose = new HashSet<String>();
     eClose.add(nfa.start);
-    eClose = RegexEngine.NFA.epsClosure(nfa, eClose);
+    eClose = RegexEngine.NFA.getEpsClosure(nfa, eClose);
 
-    // expected states from epsClosure
+    // expected states from getEpsClosure
     Set<String> expected = new HashSet<String>();
     expected.add("q0");   // start has no eps transitions
 
@@ -48,7 +48,7 @@ public class epsClosure_Test {
 
     Set<String> eClose = new HashSet<String>();
     eClose.add(nfa.start);
-    eClose = RegexEngine.NFA.epsClosure(nfa, eClose);
+    eClose = RegexEngine.NFA.getEpsClosure(nfa, eClose);
 
     Set<String> expected = new HashSet<String>();
     expected.add("q2");   // start of a*
@@ -68,7 +68,7 @@ public class epsClosure_Test {
 
     Set<String> eClose = new HashSet<String>();
     eClose.add(nfa.start);
-    eClose = RegexEngine.NFA.epsClosure(nfa, eClose);
+    eClose = RegexEngine.NFA.getEpsClosure(nfa, eClose);
 
     Set<String> expected = new HashSet<String>();
     expected.add("q0");   // start has not eps transitions
@@ -86,7 +86,7 @@ public class epsClosure_Test {
 
     Set<String> eClose = new HashSet<String>();
     eClose.add(nfa.start);
-    eClose = RegexEngine.NFA.epsClosure(nfa, eClose);
+    eClose = RegexEngine.NFA.getEpsClosure(nfa, eClose);
 
     Set<String> expected = new HashSet<String>();
     expected.add("q4");   // start of a|b
@@ -107,7 +107,7 @@ public class epsClosure_Test {
 
     Set<String> eClose = new HashSet<String>();
     eClose.add(nfa.start);
-    eClose = RegexEngine.NFA.epsClosure(nfa, eClose);
+    eClose = RegexEngine.NFA.getEpsClosure(nfa, eClose);
 
     Set<String> expected = new HashSet<String>(); // q0 q1 q2 q3-q4 q5    q6 q7-q8 q9    q10 q11-q12 q13
     expected.add("q12");  // start of a|b|c|d
@@ -131,7 +131,7 @@ public class epsClosure_Test {
 
     Set<String> eClose = new HashSet<String>();
     eClose.add(nfa.start);
-    eClose = RegexEngine.NFA.epsClosure(nfa, eClose);
+    eClose = RegexEngine.NFA.getEpsClosure(nfa, eClose);
 
     Set<String> expected = new HashSet<String>();
     expected.add("q12");  // start of (a|b)|(c|d)
@@ -155,7 +155,7 @@ public class epsClosure_Test {
 
     Set<String> eClose = new HashSet<String>();
     eClose.add(nfa.start);
-    eClose = RegexEngine.NFA.epsClosure(nfa, eClose);
+    eClose = RegexEngine.NFA.getEpsClosure(nfa, eClose);
 
     Set<String> expected = new HashSet<String>();
     expected.add("q10");  // start of (a|b)|(c*)
@@ -180,7 +180,7 @@ public class epsClosure_Test {
 
     Set<String> eClose = new HashSet<String>();
     eClose.add(nfa.start);
-    eClose = RegexEngine.NFA.epsClosure(nfa, eClose);
+    eClose = RegexEngine.NFA.getEpsClosure(nfa, eClose);
 
     Set<String> expected = new HashSet<String>();
     expected.add("q9");   // start of (a|b)|(c+)
