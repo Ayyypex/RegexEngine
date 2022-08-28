@@ -56,7 +56,7 @@ public class RegexEngine {
                 }
                 System.out.println(rowOutput);
             }
-            System.out.println("\n");
+            System.out.println("");
         }
         System.out.println("ready");
         
@@ -142,7 +142,7 @@ public class RegexEngine {
 
         // sort inputs and add epsilon to the start
         Collections.sort(inputs);
-        inputs.add(0,"eps");
+        inputs.add(0,"epsilon");
 
         return inputs;
     }
@@ -379,7 +379,7 @@ public class RegexEngine {
                     NFA.Transition trans = nfa.transitions.get(j);
 
                     // if new state is 
-                    if ( eClose.contains(trans.state) && trans.input.equals("eps") && !eClose.contains(trans.result) ) {
+                    if ( eClose.contains(trans.state) && trans.input.equals("epsilon") && !eClose.contains(trans.result) ) {
                         eClose.add(trans.result);
                         newStateAdded = true;
                     }
@@ -400,9 +400,9 @@ public class RegexEngine {
             A.states.add( end );
 
             // add epsilon transitions
-            A.transitions.add( new Transition(start, "eps", A.start) );
-            A.transitions.add( new Transition(A.end, "eps", start) );
-            A.transitions.add( new Transition(start, "eps", end) );
+            A.transitions.add( new Transition(start, "epsilon", A.start) );
+            A.transitions.add( new Transition(A.end, "epsilon", start) );
+            A.transitions.add( new Transition(start, "epsilon", end) );
 
             // Change A's start and end to new states
             A.start = start;
@@ -420,8 +420,8 @@ public class RegexEngine {
             A.states.add( end );
 
             // add epsilon transitions from new state to start of A and from end of A to new state
-            A.transitions.add( new Transition(end, "eps", A.start) );
-            A.transitions.add( new Transition(A.end, "eps", end) );
+            A.transitions.add( new Transition(end, "epsilon", A.start) );
+            A.transitions.add( new Transition(A.end, "epsilon", end) );
 
             // Change A's end to new state
             A.end = end;
@@ -439,7 +439,7 @@ public class RegexEngine {
             A.transitions.addAll(B.transitions);
 
             // add epsilon transition from end of A to start of B
-            A.transitions.add( new Transition(A.end, "eps", B.start) );
+            A.transitions.add( new Transition(A.end, "epsilon", B.start) );
 
             // Change A's end to B's end
             A.end = B.end;
@@ -463,10 +463,10 @@ public class RegexEngine {
             A.states.add( end );
 
             // add epsilon transitions
-            A.transitions.add( new Transition(start, "eps", A.start) );
-            A.transitions.add( new Transition(start, "eps", B.start) );
-            A.transitions.add( new Transition(A.end, "eps", end) );
-            A.transitions.add( new Transition(B.end, "eps", end) );
+            A.transitions.add( new Transition(start, "epsilon", A.start) );
+            A.transitions.add( new Transition(start, "epsilon", B.start) );
+            A.transitions.add( new Transition(A.end, "epsilon", end) );
+            A.transitions.add( new Transition(B.end, "epsilon", end) );
 
             // Change A's start and end to the new states respectively
             A.start = start;
@@ -482,7 +482,7 @@ public class RegexEngine {
             // initialize 2D array
             for ( int i=0; i < rows; i++ ) {
                 for ( int j=0; j < cols; j++ ) {
-                    table[i][j] = " ";
+                    table[i][j] = "";
                 }
             }
 
@@ -493,7 +493,13 @@ public class RegexEngine {
 
             // set table state column
             for ( int i=0; i < nfa.states.size(); i++ ) {
-                table[i+1][0] = nfa.states.get(i) + " ";
+                if ( nfa.states.get(i) == nfa.start ) {
+                    table[i+1][0] += ">";
+                }
+                if ( nfa.states.get(i) == nfa.end ) {
+                    table[i+1][0] += "*";
+                }
+                table[i+1][0] += nfa.states.get(i) + " ";
             }
 
             // add transitions to table
@@ -504,6 +510,39 @@ public class RegexEngine {
                 int c = inputs.indexOf(trans.input) + 1;
 
                 table[r][c] += trans.result + ",";
+            }
+
+            // adjust the width of each column
+            for ( int i=0; i < cols; i++ ) {
+
+                // find largest width in column
+                int maxWidth = 1;
+                for ( int j=0; j < rows; j++ ) {
+                    if ( table[j][i].length() > maxWidth ) {
+                        maxWidth = table[j][i].length();
+                    }
+                }
+
+                // adjust width of column
+                for ( int j=0; j < rows; j++ ) {
+                    int len = table[j][i].length();
+
+                    // remove any trailing commas
+                    if ( len > 1 && table[j][i].charAt(len-1) == ',' ) {
+                        table[j][i] = table[j][i].substring(0,len-1);
+                        len--;
+                    }
+ 
+                    // add spaces to pad string
+                    int diff = maxWidth - len;
+                    for ( int k=0; k < diff; k++ ) {
+                        table[j][i] += " ";
+                    }
+
+                    // add column divider
+                    table[j][i] += "| ";
+                }
+                
             }
 
             return table;

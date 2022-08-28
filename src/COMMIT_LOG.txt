@@ -1,3 +1,9 @@
+\\---------------- Commit #49 on 28/8/2022 ------------------------------------------------//
+I have finished implementing tableOf(). It now pads the columns to the largest width in 
+that column. I have also added a column divider to make the columns more clear.
+
+
+
 \\---------------- Commit #48 on 27/8/2022 ------------------------------------------------//
 Implemented uniqueInputs() and most of tableOf(). Need to work on padding next. 
 
