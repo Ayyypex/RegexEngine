@@ -65,9 +65,9 @@ public class NFA_Test {
 
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
     transitions.add( new RegexEngine.NFA.Transition("q0", "b", "q1") );
-    transitions.add( new RegexEngine.NFA.Transition("q2", "eps", "q0") );
-    transitions.add( new RegexEngine.NFA.Transition("q1", "eps", "q2") );
-    transitions.add( new RegexEngine.NFA.Transition("q2", "eps", "q3") );
+    transitions.add( new RegexEngine.NFA.Transition("q2", "epsilon", "q0") );
+    transitions.add( new RegexEngine.NFA.Transition("q1", "epsilon", "q2") );
+    transitions.add( new RegexEngine.NFA.Transition("q2", "epsilon", "q3") );
 
     assertEquals( "q2", bStar.start );
     assertEquals( "q3", bStar.end );
@@ -93,8 +93,8 @@ public class NFA_Test {
 
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
     transitions.add( new RegexEngine.NFA.Transition("q0", "c", "q1") );
-    transitions.add( new RegexEngine.NFA.Transition("q2", "eps", "q0") );
-    transitions.add( new RegexEngine.NFA.Transition("q1", "eps", "q2") );
+    transitions.add( new RegexEngine.NFA.Transition("q2", "epsilon", "q0") );
+    transitions.add( new RegexEngine.NFA.Transition("q1", "epsilon", "q2") );
 
     assertEquals( "q0", cPlus.start );
     assertEquals( "q2", cPlus.end );
@@ -123,7 +123,7 @@ public class NFA_Test {
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
     transitions.add( new RegexEngine.NFA.Transition("q0", "d", "q1") );
     transitions.add( new RegexEngine.NFA.Transition("q2", "e", "q3") );
-    transitions.add( new RegexEngine.NFA.Transition("q1", "eps", "q2") );
+    transitions.add( new RegexEngine.NFA.Transition("q1", "epsilon", "q2") );
 
     assertEquals( "q0", de.start );
     assertEquals( "q3", de.end );
@@ -154,10 +154,10 @@ public class NFA_Test {
     List<RegexEngine.NFA.Transition> transitions = new ArrayList<RegexEngine.NFA.Transition>();
     transitions.add( new RegexEngine.NFA.Transition("q0", "f", "q1") );
     transitions.add( new RegexEngine.NFA.Transition("q2", "g", "q3") );
-    transitions.add( new RegexEngine.NFA.Transition("q4", "eps", "q0") );
-    transitions.add( new RegexEngine.NFA.Transition("q4", "eps", "q2") );
-    transitions.add( new RegexEngine.NFA.Transition("q1", "eps", "q5") );
-    transitions.add( new RegexEngine.NFA.Transition("q3", "eps", "q5") );
+    transitions.add( new RegexEngine.NFA.Transition("q4", "epsilon", "q0") );
+    transitions.add( new RegexEngine.NFA.Transition("q4", "epsilon", "q2") );
+    transitions.add( new RegexEngine.NFA.Transition("q1", "epsilon", "q5") );
+    transitions.add( new RegexEngine.NFA.Transition("q3", "epsilon", "q5") );
 
     assertEquals( "q4", fORg.start );
     assertEquals( "q5", fORg.end );

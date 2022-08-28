@@ -1,6 +1,12 @@
+\\---------------- Commit #52 on 28/8/2022 ------------------------------------------------//
+Updated tests to account for the name change of certain validation functions and the 
+change from "eps" to "epsilon".
+
+
+
 \\---------------- Commit #51 on 28/8/2022 ------------------------------------------------//
 Created checkRegex() to use previous validation functions to do some simple checks on the 
-user's regex input.
+user's regex input. 
 
 
 

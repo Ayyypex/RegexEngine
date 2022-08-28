@@ -11,7 +11,7 @@ import org.junit.Test;
 public class validation_Test {
 
   @Test
-  public void validChar_Test() {
+  public void legalChar_Test() {
     Object[][] input =  {
       { 'a', true },
       { 'c', true },
@@ -32,12 +32,12 @@ public class validation_Test {
     };
 
     for ( int i=0; i < input.length; i++ ) {
-      assertEquals( input[i][1], RegexEngine.validChar( String.valueOf(input[i][0]).charAt(0) ) );
+      assertEquals( input[i][1], RegexEngine.legalChar( String.valueOf(input[i][0]).charAt(0) ) );
     }
   }
 
   @Test
-  public void validSymbol_Test() {
+  public void legalSymbol_Test() {
     Object[][] input =  {
       { '(', true },
       { ')', true },
@@ -58,7 +58,7 @@ public class validation_Test {
     };
 
     for ( int i=0; i < input.length; i++ ) {
-      assertEquals( input[i][1], RegexEngine.validSymbol( String.valueOf(input[i][0]).charAt(0) ) );
+      assertEquals( input[i][1], RegexEngine.legalSymbol( String.valueOf(input[i][0]).charAt(0) ) );
     }
   }
 
@@ -86,7 +86,7 @@ public class validation_Test {
   }
 
   @Test
-  public void validRegex_Test() {
+  public void legalRegexCharacters_Test() {
     Object[][] input = {
       { "abcde fghijklmnopqr stuvwxyz", true },
       { "ABCD EFGHI JKLMNOPQR STUVWXYZ", true },
@@ -106,7 +106,7 @@ public class validation_Test {
     };
 
     for ( int i=0; i < input.length; i++ ) {
-      assertEquals( input[i][1], RegexEngine.validRegex( String.valueOf(input[i][0]) ) );
+      assertEquals( input[i][1], RegexEngine.legalRegexCharacters( String.valueOf(input[i][0]) ) );
     }
   }
 }
