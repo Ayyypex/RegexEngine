@@ -63,29 +63,6 @@ public class validation_Test {
   }
 
   @Test
-  public void precedenceOf_Test() {
-    Object[][] input =  {
-      { '*', 2 },
-      { '+', 2 },
-      { '_', 1 },
-      { '|', 0 },
-      { 'a', 0 },
-      { 'c', 0 },
-      { 'z', 0 },
-      { 'A', 0 },
-      { 'C', 0 },
-      { 'Z', 0 },
-      { '0', 0 },
-      { '9', 0 },
-      { ' ', 0 },
-    };
-
-    for ( int i=0; i < input.length; i++ ) {
-      assertEquals( input[i][1], RegexEngine.precedenceOf( String.valueOf(input[i][0]).charAt(0) ) );
-    }
-  }
-
-  @Test
   public void legalRegexCharacters_Test() {
     Object[][] input = {
       { "abcde fghijklmnopqr stuvwxyz", true },
@@ -156,29 +133,55 @@ public class validation_Test {
     }
   }
 
-  /*
   @Test
   public void checkRegex_Test() {
     Object[][] input = {
-      { "(ab*)", false },
-      { "(a|b)c", false },
-      { "(a|b)c", false },
-      { "(a|b+)*c", false },
-      { "a|(bc)", false },
-      { "a**", true },
-      { "a*+", true },
-      { "a++", true },
-      { "+*", true },
-      { "((a)b)", true },
-      { "(a(b))", true },
-      { "a|*", true },
-      { "a|+", true },
-      { "(a+b)*+", true }
+      { "", false },
+      { "a-b", false },
+      { "a,b", false },
+      { "(ab", false },
+      { "ab)", false },
+      { "a?ab", false },
+      { "a||b", false },
+      { "a?ab", false },
+      { "a?ab", false },
+      { "a?ab", false },
+      { "a+b", true },
+      { "a*b|c", true },
+      { "(a+b)*|(cd)+", true },
+      { "abc", true },
+      { "ab(c|d)*f*", true },
+      { "a+b*c", true },
+      { "a+(b*c|de)+f+", true },
+      { "a(b|cd|e*f|g+h|i)(jk)*", true },
+      { "(a b)( *)", true },
     };
 
     for ( int i=0; i < input.length; i++ ) {
       assertEquals( input[i][1], RegexEngine.checkRegex( String.valueOf(input[i][0]) ) );
     }
   }
-  */
+
+  @Test
+  public void precedenceOf_Test() {
+    Object[][] input =  {
+      { '*', 2 },
+      { '+', 2 },
+      { '_', 1 },
+      { '|', 0 },
+      { 'a', 0 },
+      { 'c', 0 },
+      { 'z', 0 },
+      { 'A', 0 },
+      { 'C', 0 },
+      { 'Z', 0 },
+      { '0', 0 },
+      { '9', 0 },
+      { ' ', 0 },
+    };
+
+    for ( int i=0; i < input.length; i++ ) {
+      assertEquals( input[i][1], RegexEngine.precedenceOf( String.valueOf(input[i][0]).charAt(0) ) );
+    }
+  }
 }

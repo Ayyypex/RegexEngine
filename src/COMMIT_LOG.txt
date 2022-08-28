@@ -1,3 +1,10 @@
+\\---------------- Commit #55 on 28/8/2022 ------------------------------------------------//
+Wrote tests for checkRegex(), uniqueInput(), and tableOf(). The NFAs used to test tableOf()
+are not complex because manually writing out the expected output does not seem worth the 
+effort. It does however cover the basic operators.
+
+
+
 \\---------------- Commit #54 on 28/8/2022 ------------------------------------------------//
 Modified uniqueInput() and tableOf() to be more self-reliant. I think that counts as 
 decoupling. Will write tests for both soon.

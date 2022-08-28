@@ -1,8 +1,10 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 
 
@@ -169,5 +171,209 @@ public class NFA_Test {
             assertEquals( fORg.transitions.get(i).transition, transitions.get(i).transition );
         }
     }
+  }
+
+  @Test
+  public void uniqueInput_Test1() {
+    // create NFA
+    String regex = "a";
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
+    RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
+
+    // expected inputs in expected order
+    List<String> expected = new ArrayList<String>();
+    expected.add("a");
+
+    List<String> result = RegexEngine.NFA.uniqueInput(nfa);
+
+    // compare
+    assertEquals( expected.size(), result.size() );
+    assertTrue( expected.equals(result) );
+  }
+
+  @Test
+  public void uniqueInput_Test2() {
+    String regex = "a*";
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
+    RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
+
+    List<String> expected = new ArrayList<String>();
+    expected.add("epsilon");
+    expected.add("a");
+
+    List<String> result = RegexEngine.NFA.uniqueInput(nfa);
+
+    assertEquals( expected.size(), result.size() );
+    assertTrue( expected.equals(result) );
+  }
+
+  @Test
+  public void uniqueInput_Test3() {
+    String regex = "a|b";
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
+    RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
+
+    List<String> expected = new ArrayList<String>();
+    expected.add("epsilon");
+    expected.add("a");
+    expected.add("b");
+
+    List<String> result = RegexEngine.NFA.uniqueInput(nfa);
+
+    assertEquals( expected.size(), result.size() );
+    assertTrue( expected.equals(result) );
+  }
+
+  @Test
+  public void uniqueInput_Test4() {
+    String regex = "(a|bc1)+( de2)";
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
+    RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
+
+    List<String> expected = new ArrayList<String>();
+    expected.add("epsilon");
+    expected.add(" ");
+    expected.add("1");
+    expected.add("2");
+    expected.add("a");
+    expected.add("b");
+    expected.add("c");
+    expected.add("d");
+    expected.add("e");
+
+    List<String> result = RegexEngine.NFA.uniqueInput(nfa);
+
+    assertEquals( expected.size(), result.size() );
+    assertTrue( expected.equals(result) );
+  }
+
+  @Test
+  public void uniqueInput_Test5() {
+    String regex = "a(b|cd|e*f|g+h|i)(jk)*";
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
+    RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
+
+    List<String> expected = new ArrayList<String>();
+    expected.add("epsilon");
+    expected.add("a");
+    expected.add("b");
+    expected.add("c");
+    expected.add("d");
+    expected.add("e");
+    expected.add("f");
+    expected.add("g");
+    expected.add("h");
+    expected.add("i");
+    expected.add("j");
+    expected.add("k");
+
+    List<String> result = RegexEngine.NFA.uniqueInput(nfa);
+
+    assertEquals( expected.size(), result.size() );
+    assertTrue( expected.equals(result) );
+  }
+
+  @Test
+  public void tableOf_Test1() {
+    String regex = "a";
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
+    RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
+
+    // expected table
+    String[][] expected = { { "    | ",  "a  | " }, 
+                            { ">q0 | ",  "q1 | " }, 
+                            { "*q1 | ",  "   | " }};
+    
+    // resulting table
+    String[][] result = RegexEngine.NFA.tableOf(nfa);
+
+    assertTrue( Arrays.deepEquals(expected, result) );
+  }
+
+  @Test
+  public void tableOf_Test2() {
+    String regex = "ab";
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
+    RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
+
+    String[][] expected = { { "    | ",  "epsilon | ",  "a  | ",  "b  | " }, 
+                            { ">q0 | ",  "        | ",  "q1 | ",  "   | " }, 
+                            { "q1  | ",  "q2      | ",  "   | ",  "   | " }, 
+                            { "q2  | ",  "        | ",  "   | ",  "q3 | " }, 
+                            { "*q3 | ",  "        | ",  "   | ",  "   | " }};
+    
+    String[][] result = RegexEngine.NFA.tableOf(nfa);
+
+    assertTrue( Arrays.deepEquals(expected, result) );
+  }
+
+  @Test
+  public void tableOf_Test3() {
+    String regex = "abc*";
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
+    RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
+
+    String[][] expected = { { "    | ",  "epsilon | ",  "a  | ",  "b  | ",  "c  | " }, 
+                            { ">q0 | ",  "        | ",  "q1 | ",  "   | ",  "   | " }, 
+                            { "q1  | ",  "q2      | ",  "   | ",  "   | ",  "   | " }, 
+                            { "q2  | ",  "        | ",  "   | ",  "q3 | ",  "   | " }, 
+                            { "q3  | ",  "q6      | ",  "   | ",  "   | ",  "   | " },
+                            { "q4  | ",  "        | ",  "   | ",  "   | ",  "q5 | " }, 
+                            { "q5  | ",  "q6      | ",  "   | ",  "   | ",  "   | " }, 
+                            { "q6  | ",  "q4,q7   | ",  "   | ",  "   | ",  "   | " }, 
+                            { "*q7 | ",  "        | ",  "   | ",  "   | ",  "   | " }};
+    
+    String[][] result = RegexEngine.NFA.tableOf(nfa);
+
+    assertTrue( Arrays.deepEquals(expected, result) );
+  }
+
+  @Test
+  public void tableOf_Test4() {
+    String regex = "ab +";
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
+    RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
+
+    String[][] expected = { { "    | ",  "epsilon | ",  "   | ",  "a  | ",  "b  | " }, 
+                            { ">q0 | ",  "        | ",  "   | ",  "q1 | ",  "   | " }, 
+                            { "q1  | ",  "q2      | ",  "   | ",  "   | ",  "   | " }, 
+                            { "q2  | ",  "        | ",  "   | ",  "   | ",  "q3 | " }, 
+                            { "q3  | ",  "q4      | ",  "   | ",  "   | ",  "   | " },
+                            { "q4  | ",  "        | ",  "q5 | ",  "   | ",  "   | " }, 
+                            { "q5  | ",  "q6      | ",  "   | ",  "   | ",  "   | " }, 
+                            { "*q6 | ",  "q4      | ",  "   | ",  "   | ",  "   | " }};
+    
+    String[][] result = RegexEngine.NFA.tableOf(nfa);
+
+    assertTrue( Arrays.deepEquals(expected, result) );
+  }
+
+  @Test
+  public void tableOf_Test5() {
+    String regex = "a|b";
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
+    RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
+
+    String[][] expected = { { "    | ",  "epsilon | ",  "a  | ",  "b  | " }, 
+                            { "q0  | ",  "        | ",  "q1 | ",  "   | " }, 
+                            { "q1  | ",  "q5      | ",  "   | ",  "   | " }, 
+                            { "q2  | ",  "        | ",  "   | ",  "q3 | " }, 
+                            { "q3  | ",  "q5      | ",  "   | ",  "   | " },
+                            { ">q4 | ",  "q0,q2   | ",  "   | ",  "   | " }, 
+                            { "*q5 | ",  "        | ",  "   | ",  "   | " }};
+    
+    String[][] result = RegexEngine.NFA.tableOf(nfa);
+
+    assertTrue( Arrays.deepEquals(expected, result) );
   }
 }

@@ -161,7 +161,7 @@ public class RegexEngine {
 
     // does some input validation on the regex, not an exhaustive check
     static boolean checkRegex(String regex) {
-        if ( !legalRegexCharacters(regex) || !legalBrackets(regex) || badSymbolUsage(regex) ) {
+        if ( !legalRegexCharacters(regex) || !legalBrackets(regex) || badSymbolUsage(regex) || regex == "" ) {
             return false;
         }
         return true;

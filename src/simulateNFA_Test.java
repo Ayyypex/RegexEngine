@@ -19,8 +19,8 @@ public class simulateNFA_Test {
   public void test1() {
     // create NFA to test
     String regex = "a";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     // input and expected output
@@ -45,8 +45,8 @@ public class simulateNFA_Test {
   @Test
   public void test2() {
     String regex = "abc";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -67,8 +67,8 @@ public class simulateNFA_Test {
   @Test
   public void test3() {
     String regex = "a1d2";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -89,8 +89,8 @@ public class simulateNFA_Test {
   @Test
   public void test4() {
     String regex = "a Z 5";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -111,8 +111,8 @@ public class simulateNFA_Test {
   @Test
   public void test5() {
     String regex = "a*";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -135,8 +135,8 @@ public class simulateNFA_Test {
   @Test
   public void test6() {
     String regex = "a1*";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -158,8 +158,8 @@ public class simulateNFA_Test {
   @Test
   public void test7() {
     String regex = "a* *";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -186,8 +186,8 @@ public class simulateNFA_Test {
   @Test
   public void test8() {
     String regex = "a+";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -209,8 +209,8 @@ public class simulateNFA_Test {
   @Test
   public void test9() {
     String regex = "a1+";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -233,8 +233,8 @@ public class simulateNFA_Test {
   @Test
   public void test10() {
     String regex = "a+ +";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -257,8 +257,8 @@ public class simulateNFA_Test {
   @Test
   public void test11() {
     String regex = "a|b";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -280,8 +280,8 @@ public class simulateNFA_Test {
   @Test
   public void test12() {
     String regex = "a|b| |c";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -305,8 +305,8 @@ public class simulateNFA_Test {
   @Test
   public void test13() {
     String regex = "a|b*";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -327,8 +327,8 @@ public class simulateNFA_Test {
   @Test
   public void test14() {
     String regex = "a|b+";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -349,8 +349,8 @@ public class simulateNFA_Test {
   @Test
   public void test15() {
     String regex = "(a)(b)";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -371,8 +371,8 @@ public class simulateNFA_Test {
   @Test
   public void test16() {
     String regex = "(abc)(d e)f(1)";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -395,8 +395,8 @@ public class simulateNFA_Test {
   @Test
   public void test17() {
     String regex = "(ab)*";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -422,8 +422,8 @@ public class simulateNFA_Test {
   @Test
   public void test18() {
     String regex = "(ab)+";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -449,8 +449,8 @@ public class simulateNFA_Test {
   @Test
   public void test19() {
     String regex = "(a|b)| c";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -473,8 +473,8 @@ public class simulateNFA_Test {
   @Test
   public void test20() {
     String regex = "(ab)*(c )*";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -500,8 +500,8 @@ public class simulateNFA_Test {
   @Test
   public void test21() {
     String regex = "(ab)+(c )+";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -525,8 +525,8 @@ public class simulateNFA_Test {
   @Test
   public void test22() {
     String regex = "(ab)*(c )+";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -549,8 +549,8 @@ public class simulateNFA_Test {
   @Test
   public void test23() {
     String regex = "(ab)*|(c )+";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -573,8 +573,8 @@ public class simulateNFA_Test {
   @Test
   public void test24() {
     String regex = "ab(c|d)*f";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -601,8 +601,8 @@ public class simulateNFA_Test {
   @Test
   public void test25() {
     String regex = "a+b*c+";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -630,8 +630,8 @@ public class simulateNFA_Test {
   @Test
   public void test26() {
     String regex = "a+(b*c|de)+f+";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -659,8 +659,8 @@ public class simulateNFA_Test {
   @Test
   public void test27() {
     String regex = "a(b|cd|e*f|g+h|i)(jk)*";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
@@ -693,8 +693,8 @@ public class simulateNFA_Test {
   @Test
   public void test28() {
     String regex = "(a b)( *)";
-    String infix = RegexEngine.addConcatenations(regex);
-    String postfix = RegexEngine.toPostfix(infix);
+    regex = RegexEngine.addConcatenations(regex);
+    String postfix = RegexEngine.toPostfix(regex);
     RegexEngine.NFA nfa = RegexEngine.generateNFA(postfix);
 
     Object[][] input =  {
