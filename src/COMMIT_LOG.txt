@@ -1,3 +1,15 @@
+\\---------------- Commit #50 on 28/8/2022 ------------------------------------------------//
+I have implemented some more error checks with duplicateSymbols() and legalBrackets(). If
+immediate duplicate symbols (like a**) are detected, then system will exit. System will 
+also exit if brackets are used incorrectly. This mainly tracks that each left bracket is 
+paired with a right bracket, but nested brackets are also checked.
+
+I have also renamed some of the functions to better reflect its meaning. For example, 
+validRegex didn't actually check whether the regex expression is valid, it simply checked 
+if it contained any illegal characters. I will need to change the tests accordingly.
+
+
+
 \\---------------- Commit #49 on 28/8/2022 ------------------------------------------------//
 I have finished implementing tableOf(). It now pads the columns to the largest width in 
 that column. I have also added a column divider to make the columns more clear.

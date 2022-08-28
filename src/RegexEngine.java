@@ -24,16 +24,16 @@ public class RegexEngine {
         // create reader to read from System.in
         BufferedReader reader = new BufferedReader( new InputStreamReader(System.in) );
 
-        // get regular expression to test
+        // get regular expression to test, and check for illegal/invalid input
         String regex = reader.readLine();
-        if ( !validRegex(regex) ) {
+        if ( !legalRegexCharacters(regex) || !legalBrackets(regex) || duplicateSymbols(regex) ) {
             System.out.println("Error: This input is invalid: " + regex);
             System.exit(1);
         }
 
-        // add concatenation symbols and convert expression to postfix notation
-        String infix = addConcatenations(regex);
-        String postfix = toPostfix(infix);
+        // add concatenation symbols, and convert expression to postfix notation
+        regex = addConcatenations(regex);
+        String postfix = toPostfix(regex);
 
         // generate NFA structure
         NFA finalNFA = generateNFA(postfix);
@@ -68,13 +68,10 @@ public class RegexEngine {
                 System.out.println( String.valueOf( simulateNFA(finalNFA, completeInput) ) );
 
                 String line = reader.readLine();
-                // do some input validation for line / check if length > 1?
-
                 completeInput += line;
 
             } else {
                 String line = reader.readLine();
-                // do some input validation for line
 
                 // print true or false depending on if the NFA accepts the input
                 System.out.println( String.valueOf( simulateNFA(finalNFA, line) ) );
@@ -83,7 +80,7 @@ public class RegexEngine {
     }
 
     // checks if character is valid
-    static boolean validChar(char ch) {
+    static boolean legalChar(char ch) {
         if ( !Character.isLetterOrDigit(ch) && ch != ' ' ) {
             return false;
         }
@@ -91,11 +88,49 @@ public class RegexEngine {
     }
 
     // checks if character is a valid symbol
-    static boolean validSymbol(char ch) {
+    static boolean legalSymbol(char ch) {
         if ( ch == '|' || ch == '*' || ch == '+' || ch == '(' || ch == ')' ) {
             return true;
         }
         return false;
+    }
+
+    // checks if regex string contains any illegal characters
+    static boolean legalRegexCharacters(String regex) {
+        for ( int i=0; i < regex.length(); i++ ) {
+            char ch = regex.charAt(i);
+            if ( !legalChar(ch) && !legalSymbol(ch) ) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // checks if regex string uses brackets correctly
+    static boolean legalBrackets(String regex) {
+        boolean openBracket = false;
+
+        for ( int i=0; i < regex.length(); i++ ) {
+            char ch = regex.charAt(i);
+
+            // right bracket without left one
+            if ( !openBracket && ch == ')' ) {
+                return false;
+            }
+
+            // nested bracket
+            if ( openBracket && ch == '(' ) {
+                return false;
+            }
+
+            // bracket closes
+            if ( openBracket && ch == ')' ) {
+                openBracket = false;
+            }
+        }
+
+        // if bracket is still open, then brackets are not being used correctly
+        return !openBracket;
     }
 
     // returns the precedence of a character
@@ -109,58 +144,35 @@ public class RegexEngine {
         return 0;
     }
 
-    // checks if regex string contains any illegal characters
-    static boolean validRegex(String regex) {
-        for ( int i=0; i < regex.length(); i++ ) {
+    // checks whether there are duplicate symbols chained together
+    static boolean duplicateSymbols(String regex) {
+        for ( int i=0; i < regex.length()-1; i++ ) {
             char ch = regex.charAt(i);
-            if ( !validChar(ch) && !validSymbol(ch) ) {
-                return false;
+            char next = regex.charAt(i+1);
+
+            // duplicate symbol detected
+            if ( legalSymbol(ch) && ch == next )  {
+                return true;
             }
-        }
-        return true;
-    }
-
-    // count number of unique inputs that will result from the regex
-    static List<String> uniqueInput(String regex) {
-        List<String> inputs = new ArrayList<String>();
-
-        // if it has a length of 1, then there will be no epsilon transitions
-        if ( regex.length() == 1 && validChar(regex.charAt(0)) ) {
-            inputs.add(regex);
-            return inputs;
         }
         
-        // iterate over each character
-        for (int i=0; i < regex.length(); i++ ) {
-            char ch = regex.charAt(i);
-
-            // if character is valid and not in set, add it to set
-            if ( validChar(ch) && !inputs.contains( String.valueOf(ch) ) ) {
-                inputs.add( String.valueOf(ch) );
-            }
-        }
-
-        // sort inputs and add epsilon to the start
-        Collections.sort(inputs);
-        inputs.add(0,"epsilon");
-
-        return inputs;
+        return false;
     }
 
     // adds concatenation symbols to an infix string
-    static String addConcatenations(String infix) {
+    static String addConcatenations(String regex) {
         String output = "";
 
         // iterate over every character
-        for ( int i=0; i < infix.length(); i++ ) {
-            char ch = infix.charAt(i);
+        for ( int i=0; i < regex.length(); i++ ) {
+            char ch = regex.charAt(i);
             output += ch;
 
             // if character is not ( or |, then investigate the next
-            if ( ch != '(' && ch != '|' && i < infix.length()-1 ) {
-                char next = infix.charAt(i+1);
+            if ( ch != '(' && ch != '|' && i < regex.length()-1 ) {
+                char next = regex.charAt(i+1);
                 // if next character is not a symbol (except left bracket) then add concatenation symbol
-                if ( validChar(next) ||  next == '(' ) {       
+                if ( legalChar(next) ||  next == '(' ) {       
                     output += '_';
                 }
             }
@@ -179,7 +191,7 @@ public class RegexEngine {
             char ch = infix.charAt(i);
 
             // append 
-            if ( validChar(ch) ) {
+            if ( legalChar(ch) ) {
                 postfix += ch;
             }
 
@@ -222,7 +234,7 @@ public class RegexEngine {
         for (int i=0; i < postfix.length(); i++ ) {
             char ch = postfix.charAt(i);
 
-            if ( validChar(ch) ) {
+            if ( legalChar(ch) ) {
                 st.push( new NFA(ch) );
             }
 
@@ -331,6 +343,33 @@ public class RegexEngine {
         } else {
             return false;
         }
+    }
+
+    // count number of unique inputs that will result from the regex
+    static List<String> uniqueInput(String regex) {
+        List<String> inputs = new ArrayList<String>();
+
+        // if it has a length of 1, then there will be no epsilon transitions
+        if ( regex.length() == 1 && legalChar(regex.charAt(0)) ) {
+            inputs.add(regex);
+            return inputs;
+        }
+        
+        // iterate over each character
+        for (int i=0; i < regex.length(); i++ ) {
+            char ch = regex.charAt(i);
+
+            // if character is valid and not in set, add it to set
+            if ( legalChar(ch) && !inputs.contains( String.valueOf(ch) ) ) {
+                inputs.add( String.valueOf(ch) );
+            }
+        }
+
+        // sort inputs and add epsilon to the start
+        Collections.sort(inputs);
+        inputs.add(0,"epsilon");
+
+        return inputs;
     }
 
     // NFA class to represent FSA
@@ -542,7 +581,6 @@ public class RegexEngine {
                     // add column divider
                     table[j][i] += "| ";
                 }
-                
             }
 
             return table;
