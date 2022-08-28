@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 
-/* */
+/** Tests methods from the NFA class */
 public class NFA_Test {
 
   @Before
@@ -14,9 +14,12 @@ public class NFA_Test {
     RegexEngine.NFA.numberOfStates = 0;
   }
 
+  /**
+   * Tests the creation of a new NFA by comparing the expected start, end, states, and transitions.
+   */
   @Test
   public void newNFA_Test() {
-    RegexEngine.NFA a = new RegexEngine.NFA('a');
+    RegexEngine.NFA nfa = new RegexEngine.NFA('a');
 
     // States should be added in this order
     List<String> states = new ArrayList<String>();
@@ -28,32 +31,39 @@ public class NFA_Test {
     transitions.add( new RegexEngine.NFA.Transition("q0", "a", "q1") );
 
     // check start and end states, all states, and number of transitions
-    assertEquals( "q0", a.start );
-    assertEquals( "q1", a.end );
-    assertEquals( true, a.states.containsAll(states) );
-    assertEquals( a.transitions.size(), transitions.size() );
+    assertEquals( "q0", nfa.start );
+    assertEquals( "q1", nfa.end );
+    assertEquals( true, nfa.states.containsAll(states) );
+    assertEquals( nfa.transitions.size(), transitions.size() );
 
     // check if each transition is equal
-    if ( a.transitions.size() == transitions.size() ) {
-        for ( int i=0; i < a.transitions.size(); i++ ) {
-            assertEquals( a.transitions.get(i).transition, transitions.get(i).transition );
+    if ( nfa.transitions.size() == transitions.size() ) {
+        for ( int i=0; i < nfa.transitions.size(); i++ ) {
+            assertEquals( nfa.transitions.get(i).transition, transitions.get(i).transition );
         }
     }
   }
 
+  /**
+   * Tests getNewState() by calling it a few times and checking it for an expected value
+   */
   @Test
   public void getNewState_Test() {
-    int number = 3;
-    for ( int i=0; i < number; i++ ) {
+    int expected = 3;
+    for ( int i=0; i < expected; i++ ) {
         RegexEngine.NFA.getNewState();
     }
-    assertEquals( number, RegexEngine.NFA.numberOfStates );
+    assertEquals( expected, RegexEngine.NFA.numberOfStates );
   }
 
+  /**
+   * Applies the kleeneStar() operation to an NFA and compares the expected start, end, states, and transitions.
+   * Uses a simple NFA to demonstrate its functionality.
+   */
   @Test
   public void kleeneStar_Test() {
-    RegexEngine.NFA b = new RegexEngine.NFA('b');
-    RegexEngine.NFA bStar = RegexEngine.NFA.kleeneStar(b);
+    RegexEngine.NFA nfa = new RegexEngine.NFA('b');
+    RegexEngine.NFA nfaStar = RegexEngine.NFA.kleeneStar(b);
 
     List<String> states = new ArrayList<String>();
     states.add("q0");
@@ -67,22 +77,26 @@ public class NFA_Test {
     transitions.add( new RegexEngine.NFA.Transition("q1", "epsilon", "q2") );
     transitions.add( new RegexEngine.NFA.Transition("q2", "epsilon", "q3") );
 
-    assertEquals( "q2", bStar.start );
-    assertEquals( "q3", bStar.end );
-    assertEquals( true, bStar.states.containsAll(states) );
-    assertEquals( bStar.transitions.size(), transitions.size() );
+    assertEquals( "q2", nfaStar.start );
+    assertEquals( "q3", nfaStar.end );
+    assertEquals( true, nfaStar.states.containsAll(states) );
+    assertEquals( nfaStar.transitions.size(), transitions.size() );
 
-    if ( bStar.transitions.size() == transitions.size() ) {
-        for ( int i=0; i < bStar.transitions.size(); i++ ) {
-            assertEquals( bStar.transitions.get(i).transition, transitions.get(i).transition );
+    if ( nfaStar.transitions.size() == transitions.size() ) {
+        for ( int i=0; i < nfaStar.transitions.size(); i++ ) {
+            assertEquals( nfaStar.transitions.get(i).transition, transitions.get(i).transition );
         }
     }
   }
 
+  /**
+   * Applies the kleenePlus() operation to an NFA and compares the expected start, end, states, and transitions.
+   * Uses a simple NFA to demonstrate its functionality.
+   */
   @Test
   public void kleenePlus_Test() {
-    RegexEngine.NFA c = new RegexEngine.NFA('c');
-    RegexEngine.NFA cPlus = RegexEngine.NFA.kleenePlus(c);
+    RegexEngine.NFA nfa = new RegexEngine.NFA('c');
+    RegexEngine.NFA nfaPlus = RegexEngine.NFA.kleenePlus(c);
 
     List<String> states = new ArrayList<String>();
     states.add("q0");
@@ -94,23 +108,27 @@ public class NFA_Test {
     transitions.add( new RegexEngine.NFA.Transition("q2", "epsilon", "q0") );
     transitions.add( new RegexEngine.NFA.Transition("q1", "epsilon", "q2") );
 
-    assertEquals( "q0", cPlus.start );
-    assertEquals( "q2", cPlus.end );
-    assertEquals( true, cPlus.states.containsAll(states) );
-    assertEquals( cPlus.transitions.size(), transitions.size() );
+    assertEquals( "q0", nfaPlus.start );
+    assertEquals( "q2", nfaPlus.end );
+    assertEquals( true, nfaPlus.states.containsAll(states) );
+    assertEquals( nfaPlus.transitions.size(), transitions.size() );
 
-    if ( cPlus.transitions.size() == transitions.size() ) {
-        for ( int i=0; i < cPlus.transitions.size(); i++ ) {
-            assertEquals( cPlus.transitions.get(i).transition, transitions.get(i).transition );
+    if ( nfaPlus.transitions.size() == transitions.size() ) {
+        for ( int i=0; i < nfaPlus.transitions.size(); i++ ) {
+            assertEquals( nfaPlus.transitions.get(i).transition, transitions.get(i).transition );
         }
     }
   }
 
+  /**
+   * Applies the concatenate() operation to two NFA and compares the expected start, end, states, and transitions.
+   * Uses simple NFAs to demonstrate its functionality.
+   */
   @Test
   public void concatenate_Test() {
-    RegexEngine.NFA d = new RegexEngine.NFA('d');
-    RegexEngine.NFA e = new RegexEngine.NFA('e');
-    RegexEngine.NFA de = RegexEngine.NFA.concatenate(d,e);
+    RegexEngine.NFA nfa1 = new RegexEngine.NFA('d');
+    RegexEngine.NFA nfa2 = new RegexEngine.NFA('e');
+    RegexEngine.NFA nfa3 = RegexEngine.NFA.concatenate(nfa1,nfa2);
 
     List<String> states = new ArrayList<String>();
     states.add("q0");
@@ -123,23 +141,28 @@ public class NFA_Test {
     transitions.add( new RegexEngine.NFA.Transition("q2", "e", "q3") );
     transitions.add( new RegexEngine.NFA.Transition("q1", "epsilon", "q2") );
 
-    assertEquals( "q0", de.start );
-    assertEquals( "q3", de.end );
-    assertEquals( true, de.states.containsAll(states) );
-    assertEquals( de.transitions.size(), transitions.size() );
+    assertEquals( "q0", nfa3.start );
+    assertEquals( "q3", nfa3.end );
+    assertEquals( true, nfa3.states.containsAll(states) );
+    assertEquals( nfa3.transitions.size(), transitions.size() );
 
-    if ( de.transitions.size() == transitions.size() ) {
-        for ( int i=0; i < de.transitions.size(); i++ ) {
-            assertEquals( de.transitions.get(i).transition, transitions.get(i).transition );
+    if ( nfa3.transitions.size() == transitions.size() ) {
+        for ( int i=0; i < nfa3.transitions.size(); i++ ) {
+            assertEquals( nfa3.transitions.get(i).transition, transitions.get(i).transition );
         }
     }
   }
 
+  
+  /**
+   * Applies the alternate() operation to two NFA and compares the expected start, end, states, and transitions.
+   * Uses simple NFAs to demonstrate its functionality.
+   */
   @Test
   public void alternate_Test() {
-    RegexEngine.NFA f = new RegexEngine.NFA('f');
-    RegexEngine.NFA g = new RegexEngine.NFA('g');
-    RegexEngine.NFA fORg = RegexEngine.NFA.alternate(f,g);
+    RegexEngine.NFA nfa1 = new RegexEngine.NFA('f');
+    RegexEngine.NFA nfa2 = new RegexEngine.NFA('g');
+    RegexEngine.NFA nfa3 = RegexEngine.NFA.alternate(nfa1,nfa2);
 
     List<String> states = new ArrayList<String>();
     states.add("q0");
@@ -157,18 +180,22 @@ public class NFA_Test {
     transitions.add( new RegexEngine.NFA.Transition("q1", "epsilon", "q5") );
     transitions.add( new RegexEngine.NFA.Transition("q3", "epsilon", "q5") );
 
-    assertEquals( "q4", fORg.start );
-    assertEquals( "q5", fORg.end );
-    assertEquals( true, fORg.states.containsAll(states) );
-    assertEquals( fORg.transitions.size(), transitions.size() );
+    assertEquals( "q4", nfa3.start );
+    assertEquals( "q5", nfa3.end );
+    assertEquals( true, nfa3.states.containsAll(states) );
+    assertEquals( nfa3.transitions.size(), transitions.size() );
 
-    if ( fORg.transitions.size() == transitions.size() ) {
-        for ( int i=0; i < fORg.transitions.size(); i++ ) {
-            assertEquals( fORg.transitions.get(i).transition, transitions.get(i).transition );
+    if ( nfa3.transitions.size() == transitions.size() ) {
+        for ( int i=0; i < nfa3.transitions.size(); i++ ) {
+            assertEquals( nfa3.transitions.get(i).transition, transitions.get(i).transition );
         }
     }
   }
 
+  /**
+   * Tests getAlphabet() by comparing the expected inputs to the ones received from calling the function
+   * on NFAs of varying complexity. 
+   */
   @Test
   public void getAlphabet_Test1() {
     // create NFA
@@ -274,6 +301,11 @@ public class NFA_Test {
     assertTrue( expected.equals(result) );
   }
 
+   /**
+   * Tests getTable() by comparing the expected table to the one received from calling the function
+   * on simple NFAs. Simple NFAs are used because the tables get quite large otherwise. All operators
+   * are tested.
+   */
   @Test
   public void getTable_Test1() {
     String regex = "a";

@@ -4,7 +4,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 
-/* */
+/**
+ * Tests simulateNFA() by comparing the expected boolean output to the result of the function call for a variety of input
+ * on NFAs of increasing complexity.
+ */
 public class simulateNFA_Test {
   @Before
   public void init() {

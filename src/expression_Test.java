@@ -3,7 +3,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import org.junit.Test;
 
-/* */
+/**
+ * Tests addConcatenations(), getPrecedence(), and toPostfix() 
+ * 
+ * These tests are grouped together because they all involve functions used in the 
+ * transformation of the regular expression.
+ */
 public class expression_Test {
   @Test
   public void addConcatenations_Test() {

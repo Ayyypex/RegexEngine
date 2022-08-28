@@ -5,7 +5,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 
-/* */
+/**
+ * Tests getEpsClosure() by comparing the expected state set of the epsilon closure of the start of 
+ * of NFAs generated from simple to more complex regular expressions.
+ */
 public class getEpsClosure_Test {
  
   @Before
@@ -105,7 +108,7 @@ public class getEpsClosure_Test {
     eClose.add(nfa.start);
     eClose = RegexEngine.NFA.getEpsClosure(nfa, eClose);
 
-    Set<String> expected = new HashSet<String>(); // q0 q1 q2 q3-q4 q5    q6 q7-q8 q9    q10 q11-q12 q13
+    Set<String> expected = new HashSet<String>();
     expected.add("q12");  // start of a|b|c|d
     expected.add("q8");   // start of a|b|c
     expected.add("q10");  // start of d

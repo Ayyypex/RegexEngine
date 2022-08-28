@@ -3,7 +3,13 @@ import java.util.Collection;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-/* */
+/**
+ * Tests legalChar(), legalSymbol, legalRegexCharacters(), legalBrackets(), checkSymbolUsage(),
+ * and checkRegex().
+ * 
+ * These tests are grouped together because they all involve functions used in the validation 
+ * validation of input.
+ */
 public class validation_Test {
 
   @Test
