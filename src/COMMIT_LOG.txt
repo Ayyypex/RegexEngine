@@ -1,3 +1,9 @@
+\\---------------- Commit #51 on 28/8/2022 ------------------------------------------------//
+Created checkRegex() to use previous validation functions to do some simple checks on the 
+user's regex input.
+
+
+
 \\---------------- Commit #50 on 28/8/2022 ------------------------------------------------//
 I have implemented some more error checks with duplicateSymbols() and legalBrackets(). If
 immediate duplicate symbols (like a**) are detected, then system will exit. System will 

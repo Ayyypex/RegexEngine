@@ -26,7 +26,7 @@ public class RegexEngine {
 
         // get regular expression to test, and check for illegal/invalid input
         String regex = reader.readLine();
-        if ( !legalRegexCharacters(regex) || !legalBrackets(regex) || duplicateSymbols(regex) ) {
+        if ( !checkRegex(regex) ) {
             System.out.println("Error: This input is invalid: " + regex);
             System.exit(1);
         }
@@ -38,7 +38,7 @@ public class RegexEngine {
         // generate NFA structure
         NFA finalNFA = generateNFA(postfix);
 
-        // print table if verbose, then print ready
+        // print table if verbose
         if ( verbose ) {
             List<String> inputs = uniqueInput(regex);
 
@@ -46,25 +46,31 @@ public class RegexEngine {
             int rows = finalNFA.states.size() + 1;
             int cols = inputs.size() + 1;
 
+            // get transition table
             String[][] table = NFA.tableOf(finalNFA, inputs, rows, cols);
 
-            // print output
+            // print output row by row
             for ( int i=0; i < rows; i++ ) {
                 String rowOutput = "";
+
                 for ( int j=0; j < cols; j++ ) {
                     rowOutput += table[i][j];
                 }
+
                 System.out.println(rowOutput);
             }
             System.out.println("");
         }
+
+        // print ready as per assignment spec
         System.out.println("ready");
         
+        String completeInput = "";         // all of a user's input so far, used in verbose mode
+
         // read each line until ctrl+c
-        String completeInput = "";
         while ( true ) {
             if ( verbose ) {
-                // print true or false depending on if the NFA accepts the input
+                // print whether the NFA accepts the input or not
                 System.out.println( String.valueOf( simulateNFA(finalNFA, completeInput) ) );
 
                 String line = reader.readLine();
@@ -73,7 +79,7 @@ public class RegexEngine {
             } else {
                 String line = reader.readLine();
 
-                // print true or false depending on if the NFA accepts the input
+                // print whether the NFA accepts the input or not
                 System.out.println( String.valueOf( simulateNFA(finalNFA, line) ) );
             }           
         }
@@ -133,17 +139,6 @@ public class RegexEngine {
         return !openBracket;
     }
 
-    // returns the precedence of a character
-    static int precedenceOf(char ch) {
-        if ( ch == '*' || ch == '+' ) {
-            return 2;
-        }
-        else if ( ch  == '_' ) {
-            return 1;
-        }
-        return 0;
-    }
-
     // checks whether there are duplicate symbols chained together
     static boolean duplicateSymbols(String regex) {
         for ( int i=0; i < regex.length()-1; i++ ) {
@@ -157,6 +152,25 @@ public class RegexEngine {
         }
         
         return false;
+    }
+
+    // does some input validation on the regex, not an exhaustive check
+    static boolean checkRegex(String regex) {
+        if ( !legalRegexCharacters(regex) || !legalBrackets(regex) || duplicateSymbols(regex) ) {
+            return false;
+        }
+        return true;
+    }
+
+    // returns the precedence of a character
+    static int precedenceOf(char ch) {
+        if ( ch == '*' || ch == '+' ) {
+            return 2;
+        }
+        else if ( ch  == '_' ) {
+            return 1;
+        }
+        return 0;
     }
 
     // adds concatenation symbols to an infix string
