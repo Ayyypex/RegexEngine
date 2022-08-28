@@ -109,4 +109,50 @@ public class validation_Test {
       assertEquals( input[i][1], RegexEngine.legalRegexCharacters( String.valueOf(input[i][0]) ) );
     }
   }
+
+  @Test
+  public void legalBrackets_Test() {
+    Object[][] input = {
+      { "(a)", true },
+      { "(a)c", true },
+      { "(a*|b)+c", true },
+      { "(a)(b)", true },
+      { "(a|b)c", true },
+      { "(a|b)c+(1f)", true },
+      { "(a)(b)(c)(1)(2)(3)(d)(4)", true },
+      { "(a", false },
+      { "a)", false },
+      { "((a))", false },
+      { "(a b)(asda", false },
+      { "(a b)asda)", false }
+    };
+
+    for ( int i=0; i < input.length; i++ ) {
+      assertEquals( input[i][1], RegexEngine.legalBrackets( String.valueOf(input[i][0]) ) );
+    }
+  }
+
+  @Test
+  public void badSymbolUsage_Test() {
+    Object[][] input = {
+      { "(ab*)", false },
+      { "(a|b)c", false },
+      { "(a|b)c", false },
+      { "(a|b+)*c", false },
+      { "a|(bc)", false },
+      { "a**", true },
+      { "a*+", true },
+      { "a++", true },
+      { "+*", true },
+      { "((a)b)", true },
+      { "(a(b))", true },
+      { "a|*", true },
+      { "a|+", true },
+      { "(a+b)*+", true }
+    };
+
+    for ( int i=0; i < input.length; i++ ) {
+      assertEquals( input[i][1], RegexEngine.badSymbolUsage( String.valueOf(input[i][0]) ) );
+    }
+  }
 }

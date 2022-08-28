@@ -119,18 +119,23 @@ public class RegexEngine {
         for ( int i=0; i < regex.length(); i++ ) {
             char ch = regex.charAt(i);
 
+            // left bracket encountered
+            if ( !openBracket && ch == '(' ) {
+                openBracket = true;
+            }
+
             // right bracket without left one
-            if ( !openBracket && ch == ')' ) {
+            else if ( !openBracket && ch == ')' ) {
                 return false;
             }
 
             // nested bracket
-            if ( openBracket && ch == '(' ) {
+            else if ( openBracket && ch == '(' ) {
                 return false;
             }
 
             // bracket closes
-            if ( openBracket && ch == ')' ) {
+            else if ( openBracket && ch == ')' ) {
                 openBracket = false;
             }
         }
@@ -140,13 +145,17 @@ public class RegexEngine {
     }
 
     // checks whether there are duplicate symbols chained together
-    static boolean duplicateSymbols(String regex) {
+    static boolean badSymbolUsage(String regex) {
         for ( int i=0; i < regex.length()-1; i++ ) {
             char ch = regex.charAt(i);
             char next = regex.charAt(i+1);
 
-            // duplicate symbol detected
-            if ( legalSymbol(ch) && ch == next )  {
+            // invalid use of symbols detected
+            if ( ( legalSymbol(ch) && ch == next ) 
+            || ( ch == '|' && ( next == '*' || next == '+' ) ) 
+            || ( ch == '*' && next == '+' ) 
+            || ( ch == '+' && next == '*' ) )  
+            {
                 return true;
             }
         }
@@ -156,7 +165,7 @@ public class RegexEngine {
 
     // does some input validation on the regex, not an exhaustive check
     static boolean checkRegex(String regex) {
-        if ( !legalRegexCharacters(regex) || !legalBrackets(regex) || duplicateSymbols(regex) ) {
+        if ( !legalRegexCharacters(regex) || !legalBrackets(regex) || badSymbolUsage(regex) ) {
             return false;
         }
         return true;
