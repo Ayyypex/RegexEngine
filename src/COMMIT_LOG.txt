@@ -1,3 +1,9 @@
+\\---------------- Commit #54 on 28/8/2022 ------------------------------------------------//
+Modified uniqueInput() and tableOf() to be more self-reliant. I think that counts as 
+decoupling. Will write tests for both soon.
+
+
+
 \\---------------- Commit #53 on 28/8/2022 ------------------------------------------------//
 Squashed bugs in legalBrackets(), changed duplicateSymbols() to badSymbolUsage() and 
 expanded the testing in badSymbolUsage(). Added testing for both.

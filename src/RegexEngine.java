@@ -40,14 +40,10 @@ public class RegexEngine {
 
         // print table if verbose
         if ( verbose ) {
-            List<String> inputs = uniqueInput(regex);
-
-            // get number of rows and cols, + 1 for table header and state column
-            int rows = finalNFA.states.size() + 1;
-            int cols = inputs.size() + 1;
-
             // get transition table
-            String[][] table = NFA.tableOf(finalNFA, inputs, rows, cols);
+            String[][] table = NFA.tableOf(finalNFA);
+            int rows = table.length;
+            int cols = table[0].length;
 
             // print output row by row
             for ( int i=0; i < rows; i++ ) {
@@ -368,33 +364,6 @@ public class RegexEngine {
         }
     }
 
-    // count number of unique inputs that will result from the regex
-    static List<String> uniqueInput(String regex) {
-        List<String> inputs = new ArrayList<String>();
-
-        // if it has a length of 1, then there will be no epsilon transitions
-        if ( regex.length() == 1 && legalChar(regex.charAt(0)) ) {
-            inputs.add(regex);
-            return inputs;
-        }
-        
-        // iterate over each character
-        for (int i=0; i < regex.length(); i++ ) {
-            char ch = regex.charAt(i);
-
-            // if character is valid and not in set, add it to set
-            if ( legalChar(ch) && !inputs.contains( String.valueOf(ch) ) ) {
-                inputs.add( String.valueOf(ch) );
-            }
-        }
-
-        // sort inputs and add epsilon to the start
-        Collections.sort(inputs);
-        inputs.add(0,"epsilon");
-
-        return inputs;
-    }
-
     // NFA class to represent FSA
     static class NFA {
         // instance variables
@@ -537,8 +506,44 @@ public class RegexEngine {
             return A;
         }
 
+        // count number of unique inputs in an NFA
+        static List<String> uniqueInput(NFA nfa) {
+            List<String> inputs = new ArrayList<String>();
+            boolean epsilon = false;
+
+            // check input of each transition
+            for ( int i=0; i < nfa.transitions.size(); i++ ) {
+                Transition trans = nfa.transitions.get(i);
+
+                // don't add epsilon yet because we will sort later, and we want epsilon at front
+                if ( trans.input == "epsilon" ) {
+                    epsilon = true;
+                }
+
+                // new input
+                else if ( !inputs.contains(trans.input) ) {
+                    inputs.add(trans.input);
+                }
+            }
+
+            // sort inputs
+            Collections.sort(inputs);
+
+            // add epsilon at start if nfa uses it
+            if ( epsilon ) {
+                inputs.add(0,"epsilon");
+            }
+
+            return inputs;
+        }
+
         // prints transition table of an NFA
-        static String[][] tableOf(NFA nfa, List<String> inputs, int rows, int cols) {
+        static String[][] tableOf(NFA nfa) {
+            List<String> inputs = uniqueInput(nfa);
+
+            // get number of rows and cols, + 1 for table header and state column
+            int rows = nfa.states.size() + 1;
+            int cols = inputs.size() + 1;
             String[][] table = new String[rows][cols];
 
             // initialize 2D array

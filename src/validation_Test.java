@@ -155,4 +155,30 @@ public class validation_Test {
       assertEquals( input[i][1], RegexEngine.badSymbolUsage( String.valueOf(input[i][0]) ) );
     }
   }
+
+  /*
+  @Test
+  public void checkRegex_Test() {
+    Object[][] input = {
+      { "(ab*)", false },
+      { "(a|b)c", false },
+      { "(a|b)c", false },
+      { "(a|b+)*c", false },
+      { "a|(bc)", false },
+      { "a**", true },
+      { "a*+", true },
+      { "a++", true },
+      { "+*", true },
+      { "((a)b)", true },
+      { "(a(b))", true },
+      { "a|*", true },
+      { "a|+", true },
+      { "(a+b)*+", true }
+    };
+
+    for ( int i=0; i < input.length; i++ ) {
+      assertEquals( input[i][1], RegexEngine.checkRegex( String.valueOf(input[i][0]) ) );
+    }
+  }
+  */
 }
