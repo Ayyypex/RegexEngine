@@ -1,13 +1,9 @@
-import static org.junit.Assert.assertEquals;
-
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-// compile with: javac -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar *_Test.java
-//     run with: java -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore validRegex_Test
-
+/* */
 public class validation_Test {
 
   @Test
@@ -159,29 +155,6 @@ public class validation_Test {
 
     for ( int i=0; i < input.length; i++ ) {
       assertEquals( input[i][1], RegexEngine.checkRegex( String.valueOf(input[i][0]) ) );
-    }
-  }
-
-  @Test
-  public void getPrecedence_Test() {
-    Object[][] input =  {
-      { '*', 2 },
-      { '+', 2 },
-      { '_', 1 },
-      { '|', 0 },
-      { 'a', 0 },
-      { 'c', 0 },
-      { 'z', 0 },
-      { 'A', 0 },
-      { 'C', 0 },
-      { 'Z', 0 },
-      { '0', 0 },
-      { '9', 0 },
-      { ' ', 0 },
-    };
-
-    for ( int i=0; i < input.length; i++ ) {
-      assertEquals( input[i][1], RegexEngine.getPrecedence( String.valueOf(input[i][0]).charAt(0) ) );
     }
   }
 }

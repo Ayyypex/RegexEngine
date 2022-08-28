@@ -1,15 +1,11 @@
 import java.util.Set;
 import java.util.HashSet;
-
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 
-
-// compile with: javac -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar getEpsClosure_Test.java
-//     run with: java -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore getEpsClosure_Test
-
+/* */
 public class getEpsClosure_Test {
  
   @Before

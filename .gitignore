@@ -1,7 +1,6 @@
 src/RegexEngine.class
 src/validation_Test.class
-src/toPostfix_Test.class
-src/addConcatenations_Test.class
+src/expression_Test.class
 src/RegexEngine$NFA.class
 src/RegexEngine$NFA$Transition.class
 src/RegexEngine.class
