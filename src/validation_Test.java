@@ -114,20 +114,20 @@ public class validation_Test {
   @Test
   public void checkSymbolUsage_Test() {
     Object[][] input = {
-      { "(ab*)", false },
-      { "(a|b)c", false },
-      { "(a|b)c", false },
-      { "(a|b+)*c", false },
-      { "a|(bc)", false },
-      { "a**", true },
-      { "a*+", true },
-      { "a++", true },
-      { "+*", true },
-      { "((a)b)", true },
-      { "(a(b))", true },
-      { "a|*", true },
-      { "a|+", true },
-      { "(a+b)*+", true }
+      { "(ab*)", true },
+      { "(a|b)c", true },
+      { "(a|b)c", true },
+      { "(a|b+)*c", true },
+      { "a|(bc)", true },
+      { "a**", false },
+      { "a*+", false },
+      { "a++", false },
+      { "+*", false },
+      { "((a)b)", false },
+      { "(a(b))", false },
+      { "a|*", false },
+      { "a|+", false },
+      { "(a+b)*+", false }
     };
 
     for ( int i=0; i < input.length; i++ ) {

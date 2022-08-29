@@ -63,7 +63,7 @@ public class NFA_Test {
   @Test
   public void kleeneStar_Test() {
     RegexEngine.NFA nfa = new RegexEngine.NFA('b');
-    RegexEngine.NFA nfaStar = RegexEngine.NFA.kleeneStar(b);
+    RegexEngine.NFA nfaStar = RegexEngine.NFA.kleeneStar(nfa);
 
     List<String> states = new ArrayList<String>();
     states.add("q0");
@@ -96,7 +96,7 @@ public class NFA_Test {
   @Test
   public void kleenePlus_Test() {
     RegexEngine.NFA nfa = new RegexEngine.NFA('c');
-    RegexEngine.NFA nfaPlus = RegexEngine.NFA.kleenePlus(c);
+    RegexEngine.NFA nfaPlus = RegexEngine.NFA.kleenePlus(nfa);
 
     List<String> states = new ArrayList<String>();
     states.add("q0");

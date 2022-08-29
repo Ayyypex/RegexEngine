@@ -8,19 +8,19 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Collections;
 
-/** Represents an engine that parses regular expressions and matches input against it  */
+/** Represents an engine that parses regular expressions and matches a series of input against it  */
 public class RegexEngine {
     /** Takes input from System.in to parse and evaluate a regex */
     public static void main(String[] args) 
         throws IOException 
     {
-        // check if program is run in verbose mode
+        // check if program should be run in verbose mode
         boolean verbose  = false;
         if ( args.length == 1 && args[0].contains("-v") ) {
             verbose = true;
         }
 
-        // create reader to read from System.in
+        // read from System.in
         BufferedReader reader = new BufferedReader( new InputStreamReader(System.in) );
 
         // get regular expression to test, and check for illegal/invalid input
@@ -30,11 +30,9 @@ public class RegexEngine {
             System.exit(1);
         }
 
-        // add concatenation symbols, and convert expression to postfix notation
+        // convert string to appropriate form and generate NFA from it
         regex = addConcatenations(regex);
         String postfix = toPostfix(regex);
-
-        // generate NFA structure
         NFA finalNFA = generateNFA(postfix);
 
         // if we are in verbose mode, print the NFA's transition table
@@ -163,11 +161,11 @@ public class RegexEngine {
                 || ( ch == '*' && next == '+' ) 
                 || ( ch == '+' && next == '*' ) )
             {
-                return true;
+                return false;
             }
         }
         
-        return false;
+        return true;
     }
 
     /** 
@@ -176,7 +174,7 @@ public class RegexEngine {
      * @return        true or false depending on if regex is valid 
      */
     static boolean checkRegex(String regex) {
-        if ( !legalRegexCharacters(regex) || !legalBrackets(regex) || checkSymbolUsage(regex) || regex == "" ) {
+        if ( !legalRegexCharacters(regex) || !legalBrackets(regex) || !checkSymbolUsage(regex) || regex == "" ) {
             return false;
         }
         return true;
@@ -209,8 +207,10 @@ public class RegexEngine {
     }
 
     /** 
-     * Gets the precedence of a character 
-     * @param  ch  expression to add concatenations to
+     * Gets the precedence of an operator character. Repetition has highest precedence,
+     * sequence/concatenation has the next level of precedence, and alternation has
+     * the lowest precedence.
+     * @param  ch  character to get precedence of
      * @return     the integer value of the input's precedence 
      */
     static int getPrecedence(char ch) {
@@ -337,7 +337,7 @@ public class RegexEngine {
 
         // there should only be 1 NFA on the stack
         if ( st.size() != 1 ) {
-            System.out.println("Error: There is a non-1 number of NFAs left on the stack");
+            System.out.println("Error: There should be only 1 NFA left on the stack");
             System.exit(1);
         }
 
@@ -468,7 +468,7 @@ public class RegexEngine {
             A.transitions.add( new Transition(A.end, "epsilon", start) );
             A.transitions.add( new Transition(start, "epsilon", end) );
 
-            // Change A's start and end to new states
+            // change A's start and end to new states
             A.start = start;
             A.end = end;
 
@@ -487,7 +487,7 @@ public class RegexEngine {
             A.transitions.add( new Transition(end, "epsilon", A.start) );
             A.transitions.add( new Transition(A.end, "epsilon", end) );
 
-            // Change A's end to new state
+            // change A's end to new state
             A.end = end;
 
             return A;
@@ -505,7 +505,7 @@ public class RegexEngine {
             // add epsilon transition from end of A to start of B
             A.transitions.add( new Transition(A.end, "epsilon", B.start) );
 
-            // Change A's end to B's end
+            // change A's end to B's end
             A.end = B.end;
 
             return A;
@@ -532,7 +532,7 @@ public class RegexEngine {
             A.transitions.add( new Transition(A.end, "epsilon", end) );
             A.transitions.add( new Transition(B.end, "epsilon", end) );
 
-            // Change A's start and end to the new states respectively
+            // change A's start and end to the new states respectively
             A.start = start;
             A.end = end;
 
@@ -569,7 +569,7 @@ public class RegexEngine {
             return inputs;
         }
 
-        /** Returns transition table of an NFA */
+        /** Returns 2D String array of the transition table of an NFA */
         static String[][] getTable(NFA nfa) {
             List<String> inputs = getAlphabet(nfa);
 
