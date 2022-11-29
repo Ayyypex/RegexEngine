@@ -7,18 +7,20 @@ The program will print true or false for each of the following input strings dep
 
 ### Compiling and running the program
 ```shell
-/src$ javac RegexEngine.java 
-/src$ java RegexEngine 
+cd src
+javac RegexEngine.java 
+java RegexEngine 
 
 # OR run in verbose mode
-/src$ java RegexEngine -v
+java RegexEngine -v
 ```
 
 ### Compiling and running the tests
 ```shell
 # compile all tests 
-/src$ javac -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar *_Test.java
+cd src
+javac -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar *_Test.java
 
 # run specific test
-/src$ java -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore "TestName"
+java -cp .:junit-4.13.2.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore "TestName"
 ```
